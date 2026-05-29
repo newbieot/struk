@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Struk Thermal PRO</title>
+    <style>
+        /* === TAMPILAN UI WEBSITE (TIDAK TERCETAK) === */
+        :root { --primary: #008CBA; --bg: #f4f4f9; --text: #333; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex: 1 1 350px; max-width: 600px; box-sizing: border-box; }
+        h2 { margin-top: 0; font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        input[type="file"] { padding: 5px; }
+        
+        .btn { padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: #007399; }
+        .btn-danger { background-color: #ff4757; color: white; padding: 10px; }
+        .btn-danger:hover { background-color: #ff6b81; }
+        .btn-print { background-color: #2ed573; color: white; width: 100%; font-size: 1.1rem; margin-top: 20px; padding: 15px; }
+        .btn-print:hover { background-color: #26b361; }
+
+        .item-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; background: #fafafa; padding: 10px; border-radius: 6px; border: 1px solid #eee; }
+        .item-row input.qty { flex: 0.2; min-width: 50px; }
+        .item-row input.name { flex: 1; }
+        .item-row input.price { flex: 0.4; min-width: 80px; }
+
+        /* === AREA PREVIEW STRUK === */
+        .preview-wrapper { background: #2f3542; padding: 30px 20px; border-radius: 12px; display: flex; justify-content: center; }
+        
+        /* === BASE CSS UNTUK KERTAS THERMAL 58mm === */
+        #receipt { background: white; padding: 15px; color: #000; box-sizing: border-box; width: 58mm; min-height: 50mm; margin: 0 auto; overflow: hidden; }
+        .logo-container { text-align: center; margin-bottom: 5px; }
+        .logo-container img { max-width: 80%; height: auto; display: none; filter: grayscale(100%) contrast(1.2); }
+        .flex-between { display: flex; justify-content: space-between; }
+        .text-center { text-align: center; }
+        
+        /* === 10 TEMPLATE DESAIN STRUK === */
+        
+        /* 1. Klasik (Dashed, Center) */
+        .tpl-1 { font-family: 'Courier New', Courier, monospace; font-size: 12px; }
+        .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 6px 0; }
+        .tpl-1 h3 { text-align: center; font-size: 16px; margin: 0 0 5px 0; text-transform: uppercase; }
+        .tpl-1 .head-info { text-align: center; }
+        .tpl-1 .total-line { font-weight: bold; border-top: 1px dashed #000; margin-top: 5px; padding-top: 5px; }
+
+        /* 2. Modern (Solid, Sans-serif) */
+        .tpl-2 { font-family: Arial, sans-serif; font-size: 11px; }
+        .tpl-2 .divider { border-bottom: 1px solid #000; margin: 8px 0; }
+        .tpl-2 h3 { text-align: center; font-size: 18px; margin: 0 0 2px 0; font-weight: 900; }
+        .tpl-2 .head-info { text-align: center; }
+        .tpl-2 .total-line { font-weight: bold; border-top: 2px solid #000; font-size: 13px; margin-top: 5px; padding-top: 5px; }
+
+        /* 3. Minimalis (Clean, No Lines) */
+        .tpl-3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; }
+        .tpl-3 .divider { border-bottom: none; margin: 10px 0; }
+        .tpl-3 h3 { text-align: center; font-size: 14px; margin: 0 0 5px 0; font-weight: normal; letter-spacing: 1px; }
+        .tpl-3 .head-info { text-align: center; color: #333; }
+        .tpl-3 .total-line { font-weight: bold; margin-top: 10px; padding-top: 5px; }
+
+        /* 4. Retro Register (Monospace, Double Dashed) */
+        .tpl-4 { font-family: 'Lucida Console', Monaco, monospace; font-size: 10px; text-transform: uppercase; }
+        .tpl-4 .divider { border-bottom: 2px dashed #000; margin: 5px 0; }
+        .tpl-4 h3 { text-align: center; font-size: 14px; margin: 0 0 5px 0; }
+        .tpl-4 .head-info { text-align: center; }
+        .tpl-4 .total-line { font-weight: bold; margin-top: 5px; padding-top: 5px; }
+
+        /* 5. Elegan (Serif, Double Solid Line) */
+        .tpl-5 { font-family: 'Times New Roman', Times, serif; font-size: 12px; }
+        .tpl-5 .divider { border-bottom: 3px double #000; margin: 6px 0; }
+        .tpl-5 h3 { text-align: center; font-size: 18px; margin: 0 0 5px 0; font-style: italic; }
+        .tpl-5 .head-info { text-align: center; }
+        .tpl-5 .total-line { font-weight: bold; font-size: 14px; margin-top: 5px; padding-top: 5px; }
+
+        /* 6. Bold (Tebal, Impact) */
+        .tpl-6 { font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; }
+        .tpl-6 .divider { border-bottom: 2px solid #000; margin: 5px 0; }
+        .tpl-6 h3 { text-align: center; font-size: 16px; margin: 0 0 2px 0; }
+        .tpl-6 .head-info { text-align: center; }
+        .tpl-6 .total-line { font-size: 12px; margin-top: 5px; padding-top: 5px; }
+
+        /* 7. Rata Kiri (Left Align Header) */
+        .tpl-7 { font-family: Arial, sans-serif; font-size: 11px; }
+        .tpl-7 .divider { border-bottom: 1px solid #000; margin: 6px 0; }
+        .tpl-7 h3 { text-align: left; font-size: 16px; margin: 0 0 2px 0; }
+        .tpl-7 .head-info { text-align: left; }
+        .tpl-7 .logo-container { text-align: left; }
+        .tpl-7 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
+
+        /* 8. Rata Kanan (Right Align Header) */
+        .tpl-8 { font-family: Arial, sans-serif; font-size: 11px; }
+        .tpl-8 .divider { border-bottom: 1px solid #000; margin: 6px 0; }
+        .tpl-8 h3 { text-align: right; font-size: 16px; margin: 0 0 2px 0; }
+        .tpl-8 .head-info { text-align: right; }
+        .tpl-8 .logo-container { text-align: right; }
+        .tpl-8 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
+
+        /* 9. Tiket (Dotted lines) */
+        .tpl-9 { font-family: 'Courier New', Courier, monospace; font-size: 11px; }
+        .tpl-9 .divider { border-bottom: 2px dotted #000; margin: 8px 0; }
+        .tpl-9 h3 { text-align: center; font-size: 15px; margin: 0; background: #000; color: #fff; padding: 3px; }
+        .tpl-9 .head-info { text-align: center; margin-top: 5px; }
+        .tpl-9 .total-line { font-weight: bold; border-top: 2px dotted #000; margin-top: 5px; padding-top: 5px; }
+
+        /* 10. Kompak (Sangat rapat untuk hemat kertas) */
+        .tpl-10 { font-family: Arial, sans-serif; font-size: 10px; line-height: 1; }
+        .tpl-10 .divider { border-bottom: 1px solid #000; margin: 3px 0; }
+        .tpl-10 h3 { text-align: center; font-size: 14px; margin: 0 0 2px 0; }
+        .tpl-10 .head-info { text-align: center; }
+        .tpl-10 .total-line { font-weight: bold; margin-top: 3px; padding-top: 3px; border-top: 1px solid #000; }
+
+        /* === ATURAN KHUSUS CETAK (PRINT) === */
+        @media print {
+            body { background: white; margin: 0; padding: 0; display: block; }
+            .panel:not(#print-panel), .btn-print { display: none !important; }
+            #print-panel { box-shadow: none; padding: 0; margin: 0; background: transparent; max-width: 100%; flex: none; }
+            .preview-wrapper { background: transparent; padding: 0; }
+            #receipt { margin: 0; padding: 0; width: 58mm; box-shadow: none; }
+            @page { margin: 0; size: 58mm auto; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel">
+        <h2>PENGATURAN STRUK</h2>
+        
+        <div class="form-group">
+            <label>Pilih Desain Struk (1-10)</label>
+            <select id="templateSelect" onchange="updatePreview()">
+                <option value="tpl-1">1. Klasik (Dashed, Center)</option>
+                <option value="tpl-2">2. Modern (Solid, Sans-serif)</option>
+                <option value="tpl-3">3. Minimalis (Clean, No Lines)</option>
+                <option value="tpl-4">4. Retro Register (Monospace)</option>
+                <option value="tpl-5">5. Elegan (Serif, Double Line)</option>
+                <option value="tpl-6">6. Bold (Tebal, Impact)</option>
+                <option value="tpl-7">7. Rata Kiri (Left Align Header)</option>
+                <option value="tpl-8">8. Rata Kanan (Right Align Header)</option>
+                <option value="tpl-9">9. Tiket Bioskop (Dotted & Invert)</option>
+                <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Upload Logo Restoran (Opsional)</label>
+            <input type="file" id="logoInput" accept="image/*">
+            <small style="color:#888;">Gunakan gambar hitam putih untuk hasil thermal terbaik.</small>
+        </div>
+
+        <div class="form-group">
+            <label>Nama Restoran</label>
+            <input type="text" id="restoName" value="KEDAI KITA" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+            <label>Alamat / Kontak</label>
+            <input type="text" id="restoAddress" value="Jl. Contoh No. 123, Batam&#10;Telp: 08123456789" oninput="updatePreview()">
+        </div>
+
+        <h2 style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center;">
+            DAFTAR PESANAN
+            <button class="btn btn-primary" onclick="addItem()" style="font-size: 12px; padding: 6px 12px;">+ Tambah</button>
+        </h2>
+        
+        <div id="itemsContainer">
+            <div class="item-row">
+                <input type="number" class="qty" placeholder="Qty" value="1" min="1" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Nama Menu" value="Nasi Goreng" oninput="updatePreview()">
+                <input type="number" class="price" placeholder="Harga" value="25000" oninput="updatePreview()">
+                <button class="btn btn-danger" onclick="removeItem(this)">X</button>
+            </div>
+            <div class="item-row">
+                <input type="number" class="qty" placeholder="Qty" value="2" min="1" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Nama Menu" value="Es Teh Manis" oninput="updatePreview()">
+                <input type="number" class="price" placeholder="Harga" value="5000" oninput="updatePreview()">
+                <button class="btn btn-danger" onclick="removeItem(this)">X</button>
+            </div>
+        </div>
+
+        <button class="btn btn-print" onclick="window.print()">🖨️ CETAK STRUK SEKARANG</button>
+    </div>
+
+    <div class="panel" id="print-panel">
+        <h2 style="text-align: center; color: #555;">PREVIEW 58MM</h2>
+        <div class="preview-wrapper">
+            
+            <div id="receipt" class="tpl-1">
+                
+                <div class="logo-container">
+                    <img id="prevLogo" src="" alt="Logo">
+                </div>
+
+                <div class="head-info">
+                    <h3 id="prevName">KEDAI KITA</h3>
+                    <div id="prevAddress" style="white-space: pre-line;">Jl. Contoh No. 123, Batam</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="flex-between" style="margin-bottom: 5px;">
+                    <span id="prevDate"></span>
+                    <span>Kasir: Admin</span>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div id="prevItems">
+                    </div>
+                
+                <div class="divider"></div>
+                
+                <div class="flex-between total-line">
+                    <span>TOTAL</span>
+                    <span id="prevTotal">Rp 0</span>
+                </div>
+                
+                <div class="divider" style="margin-top:10px;"></div>
+                <div class="text-center" style="font-size: 0.9em; margin-top: 5px;">
+                    Terima Kasih Atas Kunjungan Anda<br>
+                    Barang yang dibeli tidak dapat ditukar
+                </div>
+
+            </div>
+            </div>
+    </div>
+
+    <script>
+        // Set Tanggal saat ini
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('id-ID') + ' ' + now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('prevDate').innerText = dateStr;
+
+        // Fungsi Format Rupiah
+        function formatRp(angka) {
+            return new Intl.NumberFormat('id-ID').format(angka);
+        }
+
+        // Fungsi Handle Upload Logo
+        document.getElementById('logoInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const logoImg = document.getElementById('prevLogo');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    logoImg.src = e.target.result;
+                    logoImg.style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                logoImg.style.display = 'none';
+                logoImg.src = '';
+            }
+        });
+
+        // Fungsi Tambah Baris Input
+        function addItem() {
+            const container = document.getElementById('itemsContainer');
+            const row = document.createElement('div');
+            row.className = 'item-row';
+            row.innerHTML = `
+                <input type="number" class="qty" placeholder="Qty" value="1" min="1" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Nama Menu" oninput="updatePreview()">
+                <input type="number" class="price" placeholder="Harga" oninput="updatePreview()">
+                <button class="btn btn-danger" onclick="removeItem(this)">X</button>
+            `;
+            container.appendChild(row);
+            updatePreview();
+        }
+
+        // Fungsi Hapus Baris Input
+        function removeItem(btn) {
+            btn.parentElement.remove();
+            updatePreview();
+        }
+
+        // Fungsi Utama Update Preview Real-time
+        function updatePreview() {
+            // Update Template CSS
+            const template = document.getElementById('templateSelect').value;
+            document.getElementById('receipt').className = template;
+
+            // Update Header Teks
+            document.getElementById('prevName').innerText = document.getElementById('restoName').value || 'NAMA RESTO';
+            document.getElementById('prevAddress').innerText = document.getElementById('restoAddress').value;
+
+            // Kalkulasi & Render Items
+            const itemRows = document.querySelectorAll('.item-row');
+            let itemsHTML = '';
+            let total = 0;
+
+            itemRows.forEach(row => {
+                const qty = parseInt(row.querySelector('.qty').value) || 0;
+                const name = row.querySelector('.name').value || '';
+                const price = parseInt(row.querySelector('.price').value) || 0;
+                const subtotal = qty * price;
+                
+                if (qty > 0 && name.trim() !== '') {
+                    total += subtotal;
+                    itemsHTML += `
+                        <div style="margin-bottom: 4px;">
+                            <div>${name}</div>
+                            <div class="flex-between">
+                                <span>${qty} x ${formatRp(price)}</span>
+                                <span>${formatRp(subtotal)}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('prevItems').innerHTML = itemsHTML;
+            document.getElementById('prevTotal').innerText = 'Rp ' + formatRp(total);
+        }
+
+        // Jalankan preview pertama kali
+        updatePreview();
+    </script>
+</body>
+</html>
