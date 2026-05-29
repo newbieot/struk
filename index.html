@@ -13,6 +13,7 @@
             --tab-resto: #e74c3c;
             --tab-stat: #2980b9;
             --tab-apotek: #27ae60;
+            --tab-singtrade: #8e44ad;
         }
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
@@ -20,12 +21,13 @@
         h2 { margin-top: 0; font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         
         /* Navigasi Tab */
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: #eee; padding: 5px; border-radius: 8px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; opacity: 0.6; font-size: 0.85rem; }
-        .tab-btn.active { opacity: 1; transform: scale(1.02); }
+        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: #eee; padding: 5px; border-radius: 8px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; padding: 10px 5px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; opacity: 0.6; font-size: 0.85rem; min-width: 100px;}
+        .tab-btn.active { opacity: 1; transform: scale(1.02); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .tab-resto { background-color: var(--tab-resto); }
         .tab-stat { background-color: var(--tab-stat); }
         .tab-apotek { background-color: var(--tab-apotek); }
+        .tab-singtrade { background-color: var(--tab-singtrade); }
 
         .form-group { margin-bottom: 12px; }
         label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: #555; }
@@ -39,7 +41,7 @@
         .btn-primary:hover { background-color: #007399; }
         .btn-danger { background-color: #ff4757; color: white; padding: 10px; }
         .btn-danger:hover { background-color: #ff6b81; }
-        .btn-print { background-color: #2ed573; color: white; width: 100%; font-size: 1.1rem; margin-top: 20px; padding: 15px; border-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-print { background-color: #2ed573; color: white; width: 100%; font-size: 1.1rem; margin-top: 20px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-print:hover { background-color: #26b361; }
 
         .item-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; background: #fafafa; padding: 8px; border-radius: 6px; border: 1px solid #eee; }
@@ -157,11 +159,12 @@
     <div class="panel">
         <h2>KASIR STRUK THERMAL</h2>
         
-        <!-- Tab Navigasi Sektor Bisnis -->
+        <!-- Tab Navigasi Sektor Bisnis (Ditambah Tab ke-4) -->
         <div class="tabs">
             <button class="tab-btn tab-resto active" onclick="switchTab('restaurant')">Restaurant</button>
             <button class="tab-btn tab-stat" onclick="switchTab('stationary')">Stationary</button>
             <button class="tab-btn tab-apotek" onclick="switchTab('apotek')">Apotek</button>
+            <button class="tab-btn tab-singtrade" onclick="switchTab('singtrade')">SingTrade / Audio</button>
         </div>
         
         <div class="form-group">
@@ -251,13 +254,32 @@
             </div>
         </div>
 
+        <!-- 4. SINGTRADE (KHALISA AUDIO) FIELDS -->
+        <div id="fields-singtrade" class="category-fields">
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" id="singName" value="SingTrade Marketing & Services PTE LTD" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label>Address & Details</label>
+                <input type="text" id="singAddress" value="1 Rochor Canal Rd, #02-12&#10;Sim Lim Square, Singapore 188504&#10;GST Reg No: 201234567Z" oninput="updatePreview()">
+            </div>
+            <div class="form-group" style="background: #fdf2e9; padding: 8px; border-radius: 6px; border: 1px solid #fae5d3;">
+                <label style="color: #d35400;">🎧 Invoice Details</label>
+                <div style="margin-top: 5px;">
+                    <label style="font-weight: normal; font-size: 0.85rem;">Customer Name (Optional)</label>
+                    <input type="text" id="singCustomer" value="Mr. John Doe" oninput="updatePreview()" style="padding: 6px;">
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <label>Tanggal & Waktu Transaksi</label>
             <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
         </div>
 
         <div class="form-group">
-            <label>Pesan Kustom Bawah Struk</label>
+            <label>Pesan Kustom Bawah Struk / Footer</label>
             <textarea id="footerMessage" oninput="updatePreview()"></textarea>
         </div>
 
@@ -354,6 +376,20 @@
                     <div class="divider-11"></div>
                 </div>
 
+                <!-- === KHUSUS TPL 11 SEKTOR SINGTRADE === -->
+                <div class="tpl11-only section-tpl11-singtrade" style="margin-bottom: 5px;">
+                    <div class="text-center" style="font-weight: bold; font-size: 1.1em; margin-bottom: 6px;">TAX INVOICE</div>
+                    <div class="flex-between">
+                        <span>Inv No: <span class="prevReceiptNoField"></span></span>
+                        <span>Date: <span class="prevDateIndo"></span></span>
+                    </div>
+                    <div class="flex-between" style="margin-bottom: 4px;">
+                        <span>Sales: <span class="cashierNameField"></span></span>
+                        <span>Cust: <span id="prevSingCust"></span></span>
+                    </div>
+                    <div class="divider-11"></div>
+                </div>
+
                 <!-- DAFTAR ITEM DINAMIS -->
                 <div id="prevItems"></div>
                 
@@ -365,7 +401,7 @@
                 </div>
                 <div class="divider not-tpl11" style="margin-top:10px;"></div>
                 
-                <!-- AKUMULASI FINANSIAL KHUSUS TPL 11 RESTO / STATIONARY / APOTEK -->
+                <!-- AKUMULASI FINANSIAL KHUSUS TPL 11 RESTO / STATIONARY / APOTEK / SINGTRADE -->
                 <div class="divider-11 tpl11-only"></div>
                 <div class="tpl11-only" style="margin-bottom: 12px;">
                     <div class="flex-between">
@@ -401,8 +437,9 @@
     </div>
 
     <script>
-        // DATA CENTRAL SAKTI UNTUK 3 SEKTOR BISNIS
+        // DATA CENTRAL SAKTI UNTUK 4 SEKTOR BISNIS
         let currentTab = 'restaurant';
+        let currencySymbol = 'Rp ';
         
         const sectorData = {
             restaurant: {
@@ -460,7 +497,7 @@
                 name: "APOTEK SEHAT MANDIRI",
                 address: "Jl. Jend. Sudirman No. 42 Batam\nSIA: 442/0192/SIA-BTM/2026",
                 prefix: "#APT",
-                cashiers: ['Apoteker Maya, S.Farm', 'Apoteker Hendra, S.Farm', 'Risa (Asisten)'],
+                cashiers: ['Apoteker Maya', 'Apoteker Hendra', 'Risa (Asisten)'],
                 payments: ['Cash', 'QRIS', 'Asuransi / Admedika', 'Debit Mandiri'],
                 defaultItems: [
                     { qty: 1, name: 'Paracetamol 500mg Strip', price: 8500 },
@@ -480,6 +517,31 @@
                     "tpl-9": "NOTA KHUSUS FARMASI\nLayanan 24 Jam Nonstop",
                     "tpl-10": "Sehat Selalu.\nMatur Nuwun.",
                     "tpl-11": "Semoga Lekas Sembuh & Sehat Kembali.\nTerima Kasih Atas Kepercayaan Anda."
+                }
+            },
+            singtrade: {
+                name: "SingTrade Marketing & Services PTE LTD",
+                address: "1 Rochor Canal Rd, #02-12\nSim Lim Square, Singapore 188504\nGST Reg No: 201234567Z",
+                prefix: "#SNG",
+                cashiers: ['Alex (Sales)', 'David', 'Sarah', 'Michael', 'Chloe'],
+                payments: ['PayNow', 'NETS', 'VISA', 'MasterCard', 'Cash'],
+                defaultItems: [
+                    { qty: 1, name: 'Shure SM58 Dynamic Mic', price: 159.00 },
+                    { qty: 2, name: 'XLR Cable 3m', price: 25.50 },
+                    { qty: 1, name: 'Focusrite Scarlett 2i2', price: 289.00 }
+                ],
+                footers: {
+                    "tpl-1": "Thank you for your purchase!\nPlease keep this receipt for warranty.",
+                    "tpl-2": "THANK YOU\nGoods sold are not refundable.",
+                    "tpl-3": "Thank you for choosing SingTrade.\nEnjoy your premium audio experience!",
+                    "tpl-4": "TAX INVOICE / PAID\nSubject to standard warranty terms.",
+                    "tpl-5": "Professional Audio Solutions.\nThank You.",
+                    "tpl-6": "NO REFUND AFTER 7 DAYS!\nKeep receipt for servicing.",
+                    "tpl-7": "Thank you!\nWe hope to serve you again.",
+                    "tpl-8": "Retain this invoice for warranty registration.\nThank you.",
+                    "tpl-9": "SINGTRADE AUDIO RECEIPT\nCustomer Copy",
+                    "tpl-10": "Thank you.\nHave a great day.",
+                    "tpl-11": "All products come with 1-Year Local Warranty.\nThank you for shopping at SingTrade!"
                 }
             }
         };
@@ -510,6 +572,9 @@
         function switchTab(target) {
             currentTab = target;
             
+            // Atur simbol mata uang (SingTrade pakai SGD)
+            currencySymbol = (target === 'singtrade') ? '$ ' : 'Rp ';
+            
             // Update class aktif tombol tab
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -531,10 +596,11 @@
             sectorData[target].defaultItems.forEach(item => {
                 const row = document.createElement('div');
                 row.className = 'item-row';
+                // Note: step="0.01" ditambahkan untuk mendukung desimal mata uang Singapura (SGD)
                 row.innerHTML = `
                     <input type="number" class="qty" placeholder="Qty" value="${item.qty}" min="1" oninput="updatePreview()">
-                    <input type="text" class="name" placeholder="Nama Menu" value="${item.name}" oninput="updatePreview()">
-                    <input type="number" class="price" placeholder="Harga" value="${item.price}" oninput="updatePreview()">
+                    <input type="text" class="name" placeholder="Nama Barang" value="${item.name}" oninput="updatePreview()">
+                    <input type="number" step="0.01" class="price" placeholder="Harga" value="${item.price}" oninput="updatePreview()">
                     <button class="btn btn-danger" onclick="removeItem(this)">X</button>
                 `;
                 container.appendChild(row);
@@ -555,16 +621,27 @@
             updatePreview();
         }
 
-        function formatRp(angka) {
-            return new Intl.NumberFormat('id-ID').format(angka);
+        // Fungsi Format Mata Uang (IDR vs SGD)
+        function formatCurrency(angka) {
+            if (currentTab === 'singtrade') {
+                return new Intl.NumberFormat('en-SG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(angka);
+            } else {
+                return new Intl.NumberFormat('id-ID').format(angka);
+            }
         }
 
-        // Format Tanggal Kompleks Indonesia
-        function formatTanggalIndo(dateStr) {
-            const bulanIndo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        // Format Tanggal (English vs Indonesia)
+        function formatTanggal(dateStr) {
             const d = new Date(dateStr);
-            return d.getDate() + ' ' + bulanIndo[d.getMonth()] + ' ' + d.getFullYear() + ' ' + 
-                   d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            if (currentTab === 'singtrade') {
+                const bulanEng = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return d.getDate() + ' ' + bulanEng[d.getMonth()] + ' ' + d.getFullYear() + ' ' + 
+                       d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            } else {
+                const bulanIndo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                return d.getDate() + ' ' + bulanIndo[d.getMonth()] + ' ' + d.getFullYear() + ' ' + 
+                       d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            }
         }
 
         // MANAJEMEN INPUT DYNAMIC BARANG
@@ -575,7 +652,7 @@
             row.innerHTML = `
                 <input type="number" class="qty" placeholder="Qty" value="1" min="1" oninput="updatePreview()">
                 <input type="text" class="name" placeholder="Nama Barang" oninput="updatePreview()">
-                <input type="number" class="price" placeholder="Harga" oninput="updatePreview()">
+                <input type="number" step="0.01" class="price" placeholder="Harga" oninput="updatePreview()">
                 <button class="btn btn-danger" onclick="removeItem(this)">X</button>
             `;
             container.appendChild(row);
@@ -631,18 +708,17 @@
             let currentTitle = '';
             let currentAddress = '';
 
+            document.querySelectorAll('.tpl11-only').forEach(el => el.style.display = 'none');
+
             if (currentTab === 'restaurant') {
                 currentTitle = document.getElementById('restoName').value;
                 currentAddress = document.getElementById('restoAddress').value;
-                // Atur visibilitas section template 11 khusus
-                document.querySelectorAll('.tpl11-only').forEach(el => el.style.display = 'none');
                 if(template === 'tpl-11') {
                     document.querySelectorAll('.section-tpl11-restaurant').forEach(el => el.style.display = 'block');
                 }
             } else if (currentTab === 'stationary') {
                 currentTitle = document.getElementById('statName').value;
                 currentAddress = document.getElementById('statAddress').value;
-                document.querySelectorAll('.tpl11-only').forEach(el => el.style.display = 'none');
                 if(template === 'tpl-11') {
                     document.querySelectorAll('.section-tpl11-stationary').forEach(el => el.style.display = 'block');
                     document.querySelector('.section-tpl11-stationary-bonus').style.display = 'flex';
@@ -651,7 +727,6 @@
                 currentTitle = document.getElementById('apotekName').value;
                 currentAddress = document.getElementById('apotekAddress').value;
                 
-                // Update atribut resep dokter pasien khusus untuk apotek
                 const dkt = document.getElementById('apotekDokter').value;
                 const psn = document.getElementById('apotekPasien').value;
                 document.getElementById('prevApoDokter').innerText = dkt;
@@ -660,9 +735,16 @@
                 document.getElementById('prevApoPasien11').innerText = psn;
                 document.getElementById('prevApoResep11').innerText = currentResepId;
 
-                document.querySelectorAll('.tpl11-only').forEach(el => el.style.display = 'none');
                 if(template === 'tpl-11') {
                     document.querySelectorAll('.section-tpl11-apotek').forEach(el => el.style.display = 'block');
+                }
+            } else if (currentTab === 'singtrade') {
+                currentTitle = document.getElementById('singName').value;
+                currentAddress = document.getElementById('singAddress').value;
+                document.getElementById('prevSingCust').innerText = document.getElementById('singCustomer').value || 'Cash Customer';
+                
+                if(template === 'tpl-11') {
+                    document.querySelectorAll('.section-tpl11-singtrade').forEach(el => el.style.display = 'block');
                 }
             }
 
@@ -687,7 +769,7 @@
                                       d.getMinutes().toString().padStart(2, '0');
                 
                 document.getElementById('prevDate').innerText = formatStandard;
-                document.querySelectorAll('.prevDateIndo').forEach(el => el.innerText = formatTanggalIndo(dateInput));
+                document.querySelectorAll('.prevDateIndo').forEach(el => el.innerText = formatTanggal(dateInput));
             }
 
             // KONTEN PERHITUNGAN BARANG/MENU
@@ -698,20 +780,21 @@
             itemRows.forEach(row => {
                 const qty = parseInt(row.querySelector('.qty').value) || 0;
                 const name = row.querySelector('.name').value || '';
-                const price = parseInt(row.querySelector('.price').value) || 0;
+                // PERBAIKAN: Gunakan parseFloat agar format desimal SGD bisa dibaca
+                const price = parseFloat(row.querySelector('.price').value) || 0;
                 const subtotal = qty * price;
                 
                 if (qty > 0 && name.trim() !== '') {
                     total += subtotal;
                     
                     if(template === 'tpl-11') {
-                        // Layout Spesial Template 11: Indentasi menjorok rapi bebas potong
+                        // Layout Spesial Template 11
                         itemsHTML += `
                             <div style="margin-bottom: 5px;">
                                 <div style="margin-bottom: 1px;">${name}</div>
                                 <div class="flex-between">
-                                    <span style="padding-left: 12px; white-space: nowrap;">${formatRp(price)} x${qty}</span>
-                                    <span style="white-space: nowrap;">${formatRp(subtotal)}</span>
+                                    <span style="padding-left: 12px; white-space: nowrap;">${currencySymbol}${formatCurrency(price)} x${qty}</span>
+                                    <span style="white-space: nowrap;">${formatCurrency(subtotal)}</span>
                                 </div>
                             </div>
                         `;
@@ -721,8 +804,8 @@
                             <div style="margin-bottom: 4px;">
                                 <div>${name}</div>
                                 <div class="flex-between">
-                                    <span style="flex:1; padding-right:5px; word-break: break-all;">${qty} x ${formatRp(price)}</span>
-                                    <span style="white-space: nowrap;">${formatRp(subtotal)}</span>
+                                    <span style="flex:1; padding-right:5px; word-break: break-all;">${qty} x ${currencySymbol}${formatCurrency(price)}</span>
+                                    <span style="white-space: nowrap;">${formatCurrency(subtotal)}</span>
                                 </div>
                             </div>
                         `;
@@ -733,14 +816,15 @@
             document.getElementById('prevItems').innerHTML = itemsHTML;
             
             // Terapkan Semua Hasil Penghitungan Finansial ke Komponen DOM
-            document.querySelectorAll('.prevTotalField').forEach(el => el.innerText = 'Rp ' + formatRp(total));
-            document.querySelector('.prevSubtotalValue').innerText = formatRp(total);
+            document.querySelectorAll('.prevTotalField').forEach(el => el.innerText = currencySymbol + formatCurrency(total));
+            document.querySelector('.prevSubtotalValue').innerText = formatCurrency(total);
         }
 
         // Inisialisasi Pertama Kali Sistem Dibuka
         window.onload = function() {
             generateRandomSectorVariables('restaurant');
-            switchTab('restaurant');
+            // Simulasi klik agar UI tersusun rapi
+            document.querySelector('.tab-resto').click();
         };
     </script>
 </body>
