@@ -40,7 +40,6 @@
         .text-center { text-align: center; }
         
         /* === 10 TEMPLATE DESAIN STRUK === */
-        /* (Sama seperti sebelumnya) */
         .tpl-1 { font-family: 'Courier New', Courier, monospace; font-size: 11px; }
         .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 6px 0; }
         .tpl-1 h3 { text-align: center; font-size: 16px; margin: 0 0 5px 0; text-transform: uppercase; }
@@ -106,20 +105,10 @@
         /* === ATURAN KHUSUS CETAK (PRINT) === */
         @media print {
             body { background: white; margin: 0; padding: 0; display: block; }
-            /* Sembunyikan elemen yang tidak perlu dicetak */
             .panel:not(#print-panel), .btn-print, .no-print { display: none !important; }
-            
             #print-panel { box-shadow: none; padding: 0; margin: 0; background: transparent; max-width: 100%; flex: none; }
             .preview-wrapper { background: transparent; padding: 0; }
-            
-            /* PERBAIKAN AREA CETAK (Mencegah Teks Terpotong) */
-            #receipt { 
-                margin: 0; 
-                padding: 0 1mm !important; /* Kurangi padding seminimal mungkin */
-                width: 46mm !important; /* Area cetak printer 58mm sebenarnya adalah 46mm */
-                max-width: 46mm !important;
-                box-shadow: none; 
-            }
+            #receipt { margin: 0; padding: 0 1mm !important; width: 46mm !important; max-width: 46mm !important; box-shadow: none; }
             @page { margin: 0; size: 58mm auto; } 
         }
     </style>
@@ -148,7 +137,6 @@
         <div class="form-group">
             <label>Upload Logo Restoran (Opsional)</label>
             <input type="file" id="logoInput" accept="image/*">
-            <small style="color:#888;">Gunakan gambar hitam putih untuk hasil thermal terbaik.</small>
         </div>
 
         <div class="form-group">
@@ -158,6 +146,11 @@
         <div class="form-group">
             <label>Alamat / Kontak</label>
             <input type="text" id="restoAddress" value="Jl. Contoh No. 123, Batam&#10;Telp: 08123456789" oninput="updatePreview()">
+        </div>
+
+        <div class="form-group">
+            <label>Tanggal & Waktu Transaksi</label>
+            <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
         </div>
 
         <h2 style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center;">
@@ -185,7 +178,6 @@
 
     <div class="panel" id="print-panel">
         <h2 class="no-print" style="text-align: center; color: #555;">PREVIEW 58MM</h2>
-        
         <div class="preview-wrapper">
             
             <div id="receipt" class="tpl-1">
@@ -229,10 +221,11 @@
     </div>
 
     <script>
-        // Set Tanggal saat ini
+        // Set Default Tanggal Input ke Waktu Sekarang saat pertama kali dibuka
         const now = new Date();
-        const dateStr = now.toLocaleDateString('id-ID') + ' ' + now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-        document.getElementById('prevDate').innerText = dateStr;
+        const tzOffset = now.getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(now - tzOffset)).toISOString().slice(0, 16);
+        document.getElementById('transactionDate').value = localISOTime;
 
         // Fungsi Format Rupiah
         function formatRp(angka) {
@@ -287,6 +280,18 @@
             document.getElementById('prevName').innerText = document.getElementById('restoName').value || 'NAMA RESTO';
             document.getElementById('prevAddress').innerText = document.getElementById('restoAddress').value;
 
+            // Ambil dan Format Tanggal dari Input Form
+            const dateInput = document.getElementById('transactionDate').value;
+            if (dateInput) {
+                const d = new Date(dateInput);
+                const formattedDate = d.getDate().toString().padStart(2, '0') + '/' + 
+                                      (d.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                                      d.getFullYear() + ' ' + 
+                                      d.getHours().toString().padStart(2, '0') + ':' + 
+                                      d.getMinutes().toString().padStart(2, '0');
+                document.getElementById('prevDate').innerText = formattedDate;
+            }
+
             // Kalkulasi & Render Items
             const itemRows = document.querySelectorAll('.item-row');
             let itemsHTML = '';
@@ -316,7 +321,7 @@
             document.getElementById('prevTotal').innerText = 'Rp ' + formatRp(total);
         }
 
-        // Jalankan preview pertama kali
+        // Jalankan preview pertama kali saat web dimuat
         updatePreview();
     </script>
 </body>
