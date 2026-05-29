@@ -32,58 +32,51 @@
         /* === AREA PREVIEW STRUK === */
         .preview-wrapper { background: #2f3542; padding: 30px 20px; border-radius: 12px; display: flex; justify-content: center; }
         
-        /* === BASE CSS UNTUK KERTAS THERMAL 58mm === */
-        #receipt { background: white; padding: 15px; color: #000; box-sizing: border-box; width: 58mm; min-height: 50mm; margin: 0 auto; overflow: hidden; }
+        /* === BASE CSS UNTUK KERTAS THERMAL === */
+        #receipt { background: white; padding: 10px; color: #000; box-sizing: border-box; width: 58mm; margin: 0 auto; overflow: hidden; word-wrap: break-word; }
         .logo-container { text-align: center; margin-bottom: 5px; }
         .logo-container img { max-width: 80%; height: auto; display: none; filter: grayscale(100%) contrast(1.2); }
-        .flex-between { display: flex; justify-content: space-between; }
+        .flex-between { display: flex; justify-content: space-between; gap: 5px; }
         .text-center { text-align: center; }
         
         /* === 10 TEMPLATE DESAIN STRUK === */
-        
-        /* 1. Klasik (Dashed, Center) */
-        .tpl-1 { font-family: 'Courier New', Courier, monospace; font-size: 12px; }
+        /* (Sama seperti sebelumnya) */
+        .tpl-1 { font-family: 'Courier New', Courier, monospace; font-size: 11px; }
         .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 6px 0; }
         .tpl-1 h3 { text-align: center; font-size: 16px; margin: 0 0 5px 0; text-transform: uppercase; }
         .tpl-1 .head-info { text-align: center; }
         .tpl-1 .total-line { font-weight: bold; border-top: 1px dashed #000; margin-top: 5px; padding-top: 5px; }
 
-        /* 2. Modern (Solid, Sans-serif) */
         .tpl-2 { font-family: Arial, sans-serif; font-size: 11px; }
         .tpl-2 .divider { border-bottom: 1px solid #000; margin: 8px 0; }
-        .tpl-2 h3 { text-align: center; font-size: 18px; margin: 0 0 2px 0; font-weight: 900; }
+        .tpl-2 h3 { text-align: center; font-size: 16px; margin: 0 0 2px 0; font-weight: 900; }
         .tpl-2 .head-info { text-align: center; }
-        .tpl-2 .total-line { font-weight: bold; border-top: 2px solid #000; font-size: 13px; margin-top: 5px; padding-top: 5px; }
+        .tpl-2 .total-line { font-weight: bold; border-top: 2px solid #000; font-size: 12px; margin-top: 5px; padding-top: 5px; }
 
-        /* 3. Minimalis (Clean, No Lines) */
         .tpl-3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; }
         .tpl-3 .divider { border-bottom: none; margin: 10px 0; }
         .tpl-3 h3 { text-align: center; font-size: 14px; margin: 0 0 5px 0; font-weight: normal; letter-spacing: 1px; }
         .tpl-3 .head-info { text-align: center; color: #333; }
         .tpl-3 .total-line { font-weight: bold; margin-top: 10px; padding-top: 5px; }
 
-        /* 4. Retro Register (Monospace, Double Dashed) */
         .tpl-4 { font-family: 'Lucida Console', Monaco, monospace; font-size: 10px; text-transform: uppercase; }
         .tpl-4 .divider { border-bottom: 2px dashed #000; margin: 5px 0; }
         .tpl-4 h3 { text-align: center; font-size: 14px; margin: 0 0 5px 0; }
         .tpl-4 .head-info { text-align: center; }
         .tpl-4 .total-line { font-weight: bold; margin-top: 5px; padding-top: 5px; }
 
-        /* 5. Elegan (Serif, Double Solid Line) */
         .tpl-5 { font-family: 'Times New Roman', Times, serif; font-size: 12px; }
         .tpl-5 .divider { border-bottom: 3px double #000; margin: 6px 0; }
-        .tpl-5 h3 { text-align: center; font-size: 18px; margin: 0 0 5px 0; font-style: italic; }
+        .tpl-5 h3 { text-align: center; font-size: 16px; margin: 0 0 5px 0; font-style: italic; }
         .tpl-5 .head-info { text-align: center; }
-        .tpl-5 .total-line { font-weight: bold; font-size: 14px; margin-top: 5px; padding-top: 5px; }
+        .tpl-5 .total-line { font-weight: bold; font-size: 13px; margin-top: 5px; padding-top: 5px; }
 
-        /* 6. Bold (Tebal, Impact) */
         .tpl-6 { font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; }
         .tpl-6 .divider { border-bottom: 2px solid #000; margin: 5px 0; }
-        .tpl-6 h3 { text-align: center; font-size: 16px; margin: 0 0 2px 0; }
+        .tpl-6 h3 { text-align: center; font-size: 14px; margin: 0 0 2px 0; }
         .tpl-6 .head-info { text-align: center; }
         .tpl-6 .total-line { font-size: 12px; margin-top: 5px; padding-top: 5px; }
 
-        /* 7. Rata Kiri (Left Align Header) */
         .tpl-7 { font-family: Arial, sans-serif; font-size: 11px; }
         .tpl-7 .divider { border-bottom: 1px solid #000; margin: 6px 0; }
         .tpl-7 h3 { text-align: left; font-size: 16px; margin: 0 0 2px 0; }
@@ -91,7 +84,6 @@
         .tpl-7 .logo-container { text-align: left; }
         .tpl-7 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
 
-        /* 8. Rata Kanan (Right Align Header) */
         .tpl-8 { font-family: Arial, sans-serif; font-size: 11px; }
         .tpl-8 .divider { border-bottom: 1px solid #000; margin: 6px 0; }
         .tpl-8 h3 { text-align: right; font-size: 16px; margin: 0 0 2px 0; }
@@ -99,14 +91,12 @@
         .tpl-8 .logo-container { text-align: right; }
         .tpl-8 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
 
-        /* 9. Tiket (Dotted lines) */
         .tpl-9 { font-family: 'Courier New', Courier, monospace; font-size: 11px; }
         .tpl-9 .divider { border-bottom: 2px dotted #000; margin: 8px 0; }
-        .tpl-9 h3 { text-align: center; font-size: 15px; margin: 0; background: #000; color: #fff; padding: 3px; }
+        .tpl-9 h3 { text-align: center; font-size: 14px; margin: 0; background: #000; color: #fff; padding: 3px; }
         .tpl-9 .head-info { text-align: center; margin-top: 5px; }
         .tpl-9 .total-line { font-weight: bold; border-top: 2px dotted #000; margin-top: 5px; padding-top: 5px; }
 
-        /* 10. Kompak (Sangat rapat untuk hemat kertas) */
         .tpl-10 { font-family: Arial, sans-serif; font-size: 10px; line-height: 1; }
         .tpl-10 .divider { border-bottom: 1px solid #000; margin: 3px 0; }
         .tpl-10 h3 { text-align: center; font-size: 14px; margin: 0 0 2px 0; }
@@ -116,10 +106,20 @@
         /* === ATURAN KHUSUS CETAK (PRINT) === */
         @media print {
             body { background: white; margin: 0; padding: 0; display: block; }
-            .panel:not(#print-panel), .btn-print { display: none !important; }
+            /* Sembunyikan elemen yang tidak perlu dicetak */
+            .panel:not(#print-panel), .btn-print, .no-print { display: none !important; }
+            
             #print-panel { box-shadow: none; padding: 0; margin: 0; background: transparent; max-width: 100%; flex: none; }
             .preview-wrapper { background: transparent; padding: 0; }
-            #receipt { margin: 0; padding: 0; width: 58mm; box-shadow: none; }
+            
+            /* PERBAIKAN AREA CETAK (Mencegah Teks Terpotong) */
+            #receipt { 
+                margin: 0; 
+                padding: 0 1mm !important; /* Kurangi padding seminimal mungkin */
+                width: 46mm !important; /* Area cetak printer 58mm sebenarnya adalah 46mm */
+                max-width: 46mm !important;
+                box-shadow: none; 
+            }
             @page { margin: 0; size: 58mm auto; } 
         }
     </style>
@@ -184,7 +184,8 @@
     </div>
 
     <div class="panel" id="print-panel">
-        <h2 style="text-align: center; color: #555;">PREVIEW 58MM</h2>
+        <h2 class="no-print" style="text-align: center; color: #555;">PREVIEW 58MM</h2>
+        
         <div class="preview-wrapper">
             
             <div id="receipt" class="tpl-1">
