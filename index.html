@@ -14,7 +14,8 @@
         
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: #555; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
+        textarea { resize: vertical; height: 60px; }
         input[type="file"] { padding: 5px; }
         input[type="range"] { padding: 0; height: 10px; }
         
@@ -37,123 +38,97 @@
         .preview-wrapper { background: #2f3542; padding: 20px; border-radius: 12px; display: flex; justify-content: center; width: 100%; }
         
         /* === BASE CSS UNTUK KERTAS THERMAL === */
-        #receipt { background: white; padding: 10px; color: #000; overflow: hidden; word-wrap: break-word; page-break-inside: avoid; }
+        #receipt { background: white; padding: 10px; color: #000; overflow: hidden; word-wrap: break-word; }
         .logo-container { text-align: center; margin-bottom: 5px; }
         .logo-container img { max-width: 70%; height: auto; display: none; filter: grayscale(100%) contrast(1.3); }
         .flex-between { display: flex; justify-content: space-between; gap: 5px; width: 100%; }
         .text-center { text-align: center; }
         
-        /* === 10 TEMPLATE DESAIN STRUK (LENGKAP) === */
-        .tpl-1 { font-family: 'Courier New', Courier, monospace; font-size: 12px; }
+        /* === LOGIKA SWITCH ELEMEN TPL-11 === */
+        .tpl11-only { display: none; }
+        .tpl-11 .tpl11-only { display: block; }
+        .tpl-11 .not-tpl11 { display: none !important; }
+
+        /* === 11 TEMPLATE DESAIN STRUK (MENGGUNAKAN UKURAN RELATIF AGAR BISA DI-SCALE) === */
+        .tpl-1 { font-family: 'Courier New', Courier, monospace; }
         .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 6px 0; }
-        .tpl-1 h3 { text-align: center; font-size: 16px; margin: 0 0 5px 0; text-transform: uppercase; }
+        .tpl-1 h3 { text-align: center; font-size: 1.3em; margin: 0 0 5px 0; text-transform: uppercase; }
         .tpl-1 .head-info { text-align: center; }
         .tpl-1 .total-line { font-weight: bold; border-top: 1px dashed #000; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-2 { font-family: Arial, sans-serif; font-size: 11px; }
+        .tpl-2 { font-family: Arial, sans-serif; }
         .tpl-2 .divider { border-bottom: 1px solid #000; margin: 8px 0; }
-        .tpl-2 h3 { text-align: center; font-size: 16px; margin: 0 0 2px 0; font-weight: 900; }
+        .tpl-2 h3 { text-align: center; font-size: 1.3em; margin: 0 0 2px 0; font-weight: 900; }
         .tpl-2 .head-info { text-align: center; }
-        .tpl-2 .total-line { font-weight: bold; border-top: 2px solid #000; font-size: 12px; margin-top: 5px; padding-top: 5px; }
+        .tpl-2 .total-line { font-weight: bold; border-top: 2px solid #000; font-size: 1.1em; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; }
+        .tpl-3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
         .tpl-3 .divider { border-bottom: none; margin: 10px 0; }
-        .tpl-3 h3 { text-align: center; font-size: 14px; margin: 0 0 5px 0; font-weight: normal; letter-spacing: 1px; }
+        .tpl-3 h3 { text-align: center; font-size: 1.2em; margin: 0 0 5px 0; font-weight: normal; letter-spacing: 1px; }
         .tpl-3 .head-info { text-align: center; color: #333; }
         .tpl-3 .total-line { font-weight: bold; margin-top: 10px; padding-top: 5px; }
 
-        .tpl-4 { font-family: 'Lucida Console', Monaco, monospace; font-size: 10px; text-transform: uppercase; }
+        .tpl-4 { font-family: 'Lucida Console', Monaco, monospace; text-transform: uppercase; }
         .tpl-4 .divider { border-bottom: 2px dashed #000; margin: 5px 0; }
-        .tpl-4 h3 { text-align: center; font-size: 14px; margin: 0 0 5px 0; }
+        .tpl-4 h3 { text-align: center; font-size: 1.2em; margin: 0 0 5px 0; }
         .tpl-4 .head-info { text-align: center; }
         .tpl-4 .total-line { font-weight: bold; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-5 { font-family: 'Times New Roman', Times, serif; font-size: 12px; }
+        .tpl-5 { font-family: 'Times New Roman', Times, serif; }
         .tpl-5 .divider { border-bottom: 3px double #000; margin: 6px 0; }
-        .tpl-5 h3 { text-align: center; font-size: 16px; margin: 0 0 5px 0; font-style: italic; }
+        .tpl-5 h3 { text-align: center; font-size: 1.4em; margin: 0 0 5px 0; font-style: italic; }
         .tpl-5 .head-info { text-align: center; }
-        .tpl-5 .total-line { font-weight: bold; font-size: 13px; margin-top: 5px; padding-top: 5px; }
+        .tpl-5 .total-line { font-weight: bold; font-size: 1.2em; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-6 { font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; }
+        .tpl-6 { font-family: 'Arial Black', Impact, sans-serif; }
         .tpl-6 .divider { border-bottom: 2px solid #000; margin: 5px 0; }
-        .tpl-6 h3 { text-align: center; font-size: 14px; margin: 0 0 2px 0; }
+        .tpl-6 h3 { text-align: center; font-size: 1.3em; margin: 0 0 2px 0; }
         .tpl-6 .head-info { text-align: center; }
-        .tpl-6 .total-line { font-size: 12px; margin-top: 5px; padding-top: 5px; }
+        .tpl-6 .total-line { font-weight: bold; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-7 { font-family: Arial, sans-serif; font-size: 11px; }
+        .tpl-7 { font-family: Arial, sans-serif; }
         .tpl-7 .divider { border-bottom: 1px solid #000; margin: 6px 0; }
-        .tpl-7 h3 { text-align: left; font-size: 16px; margin: 0 0 2px 0; }
+        .tpl-7 h3 { text-align: left; font-size: 1.3em; margin: 0 0 2px 0; }
         .tpl-7 .head-info { text-align: left; }
         .tpl-7 .logo-container { text-align: left; }
         .tpl-7 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-8 { font-family: Arial, sans-serif; font-size: 11px; }
+        .tpl-8 { font-family: Arial, sans-serif; }
         .tpl-8 .divider { border-bottom: 1px solid #000; margin: 6px 0; }
-        .tpl-8 h3 { text-align: right; font-size: 16px; margin: 0 0 2px 0; }
+        .tpl-8 h3 { text-align: right; font-size: 1.3em; margin: 0 0 2px 0; }
         .tpl-8 .head-info { text-align: right; }
         .tpl-8 .logo-container { text-align: right; }
         .tpl-8 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-9 { font-family: 'Courier New', Courier, monospace; font-size: 11px; }
+        .tpl-9 { font-family: 'Courier New', Courier, monospace; }
         .tpl-9 .divider { border-bottom: 2px dotted #000; margin: 8px 0; }
-        .tpl-9 h3 { text-align: center; font-size: 14px; margin: 0; background: #000; color: #fff; padding: 3px; }
+        .tpl-9 h3 { text-align: center; font-size: 1.2em; margin: 0; background: #000; color: #fff; padding: 3px; }
         .tpl-9 .head-info { text-align: center; margin-top: 5px; }
         .tpl-9 .total-line { font-weight: bold; border-top: 2px dotted #000; margin-top: 5px; padding-top: 5px; }
 
-        .tpl-10 { font-family: Arial, sans-serif; font-size: 10px; line-height: 1.1; }
+        .tpl-10 { font-family: Arial, sans-serif; line-height: 1.1; }
         .tpl-10 .divider { border-bottom: 1px solid #000; margin: 3px 0; }
-        .tpl-10 h3 { text-align: center; font-size: 14px; margin: 0 0 2px 0; }
+        .tpl-10 h3 { text-align: center; font-size: 1.2em; margin: 0 0 2px 0; }
         .tpl-10 .head-info { text-align: center; }
         .tpl-10 .total-line { font-weight: bold; margin-top: 3px; padding-top: 3px; border-top: 1px solid #000; }
 
+        /* DESAIN 11 (One Food Street Batam Style) */
+        .tpl-11 { font-family: 'Arial', sans-serif; letter-spacing: 0.1px; }
+        .tpl-11 .head-info { text-align: center; }
+        .tpl-11 .head-info h3 { font-size: 1.3em; margin: 0 0 3px 0; font-weight: bold; text-align: center; }
+        .tpl-11 .divider-11 { border-bottom: 1px dashed #000; margin: 6px 0; }
 
-        /* =========================================================================
-           ATURAN MODERASI CETAK (PRINT BERSIH & NO-GAP)
-           ========================================================================= */
+        /* === ATURAN KRUSIAL PRINT === */
         @media print {
-            @page { 
-                margin: 0 !important; 
-                size: 58mm auto !important;
-            }
-            
+            @page { margin: 0 !important; size: 58mm auto !important; }
             html, body { 
-                margin: 0 !important; 
-                padding: 0 !important; 
-                background: #fff !important; 
-                width: 58mm !important;
-                height: max-content !important;
-                min-height: 0 !important;
-                overflow: hidden !important; /* Mencegah elemen berlebih tumpah */
+                margin: 0 !important; padding: 0 !important; background: #fff !important; 
+                width: 58mm !important; max-height: 100% !important; overflow: hidden !important; display: block !important;
             }
-            
-            .panel:not(#print-panel), .btn-print, .no-print { 
-                display: none !important; 
-            }
-            
-            #print-panel { 
-                margin: 0 !important; 
-                padding: 0 !important; 
-                width: 58mm !important; 
-                box-shadow: none !important; 
-                background: transparent !important; 
-                display: block !important;
-                height: max-content !important;
-            }
-            
-            .preview-wrapper { 
-                display: block !important; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                background: transparent !important; 
-                height: max-content !important;
-            }
-            
-            #receipt { 
-                box-shadow: none !important; 
-                height: max-content !important;
-                display: block !important;
-                padding-bottom: 5mm !important; /* Sedikit ruang agar pisau potong printer tidak memotong huruf terakhir */
-            }
+            .panel:not(#print-panel), .btn-print, .no-print { display: none !important; }
+            #print-panel { margin: 0 !important; padding: 0 !important; width: 58mm !important; box-shadow: none !important; background: transparent !important; display: block !important; }
+            .preview-wrapper { display: block !important; padding: 0 !important; margin: 0 !important; background: transparent !important; }
+            #receipt { box-shadow: none !important; display: block !important; padding-bottom: 4mm !important; }
         }
     </style>
 </head>
@@ -163,8 +138,8 @@
         <h2>PENGATURAN STRUK</h2>
         
         <div class="form-group">
-            <label>Pilih Desain Struk (1-10)</label>
-            <select id="templateSelect" onchange="updatePreview()">
+            <label>Pilih Desain Struk (1-11)</label>
+            <select id="templateSelect" onchange="handleTemplateChange()">
                 <option value="tpl-1">1. Klasik (Dashed, Center)</option>
                 <option value="tpl-2">2. Modern (Solid, Sans-serif)</option>
                 <option value="tpl-3">3. Minimalis (Clean, No Lines)</option>
@@ -173,22 +148,25 @@
                 <option value="tpl-6">6. Bold (Tebal, Impact)</option>
                 <option value="tpl-7">7. Rata Kiri (Left Align Header)</option>
                 <option value="tpl-8">8. Rata Kanan (Right Align Header)</option>
-                <option value="tpl-9">9. Tiket Bioskop (Dotted & Invert)</option>
+                <option value="tpl-9">9. Tiket Perjamuan (Dotted)</option>
                 <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
+                <option value="tpl-11" selected>11. Food Street Batam (Spesial)</option>
             </select>
         </div>
 
         <div class="form-group" style="background: #eef7fa; padding: 10px; border-radius: 6px; border: 1px solid #bce1ec;">
-            <label style="color: #007399;">🛠️ Kalibrasi Posisi Cetak Printer</label>
-            
+            <label style="color: #007399;">🛠️ Kalibrasi Posisi & Ukuran Karakter</label>
             <div style="margin-top: 8px;">
-                <label style="font-weight: normal;">Geser ke Kanan (Margin Kiri) <span id="valMargin" class="slider-val">1 mm</span></label>
+                <label style="font-weight: normal;">Margin Kiri <span id="valMargin" class="slider-val">1 mm</span></label>
                 <input type="range" id="inputMarginLeft" min="0" max="15" value="1" oninput="updatePreview()">
             </div>
-            
             <div style="margin-top: 8px;">
                 <label style="font-weight: normal;">Lebar Konten Struk <span id="valWidth" class="slider-val">46 mm</span></label>
                 <input type="range" id="inputWidth" min="40" max="56" value="46" oninput="updatePreview()">
+            </div>
+            <div style="margin-top: 8px;">
+                <label style="font-weight: normal;">Ukuran Huruf/Font <span id="valFontSize" class="slider-val">11 px</span></label>
+                <input type="range" id="inputFontSize" min="9" max="16" value="11" oninput="updatePreview()">
             </div>
         </div>
 
@@ -199,16 +177,21 @@
 
         <div class="form-group">
             <label>Nama Restoran</label>
-            <input type="text" id="restoName" value="FRESH FOOD" oninput="updatePreview()">
+            <input type="text" id="restoName" value="One Food Street" oninput="updatePreview()">
         </div>
         <div class="form-group">
             <label>Alamat / Kontak</label>
-            <input type="text" id="restoAddress" value="Jalan Van Hou&#10;Ten Belanda" oninput="updatePreview()">
+            <input type="text" id="restoAddress" value="One Batam Mall&#10;Batam Kota, Kepulauan Riau&#10;Indonesia" oninput="updatePreview()">
         </div>
 
         <div class="form-group">
             <label>Tanggal & Waktu Transaksi</label>
             <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
+        </div>
+
+        <div class="form-group">
+            <label>Pesan Kustom Bawah Struk</label>
+            <textarea id="footerMessage" oninput="updatePreview()"></textarea>
         </div>
 
         <h2 style="margin-top: 25px; display: flex; justify-content: space-between; align-items: center;">
@@ -218,20 +201,20 @@
         
         <div id="itemsContainer">
             <div class="item-row">
-                <input type="number" class="qty" placeholder="Qty" value="1" min="1" oninput="updatePreview()">
-                <input type="text" class="name" placeholder="Nama Menu" value="Prabowo" oninput="updatePreview()">
-                <input type="number" class="price" placeholder="Harga" value="25000" oninput="updatePreview()">
-                <button class="btn btn-danger" onclick="removeItem(this)">X</button>
-            </div>
-            <div class="item-row">
                 <input type="number" class="qty" placeholder="Qty" value="2" min="1" oninput="updatePreview()">
-                <input type="text" class="name" placeholder="Nama Menu" value="Gibran" oninput="updatePreview()">
-                <input type="number" class="price" placeholder="Harga" value="5000" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Nama Menu" value="Air Putih hangat" oninput="updatePreview()">
+                <input type="number" class="price" placeholder="Harga" value="2000" oninput="updatePreview()">
                 <button class="btn btn-danger" onclick="removeItem(this)">X</button>
             </div>
             <div class="item-row">
-                <input type="number" class="qty" placeholder="Qty" value="4" min="1" oninput="updatePreview()">
-                <input type="text" class="name" placeholder="Nama Menu" value="Jokowi" oninput="updatePreview()">
+                <input type="number" class="qty" placeholder="Qty" value="6" min="1" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Nama Menu" value="Teh Obeng normal" oninput="updatePreview()">
+                <input type="number" class="price" placeholder="Harga" value="8000" oninput="updatePreview()">
+                <button class="btn btn-danger" onclick="removeItem(this)">X</button>
+            </div>
+            <div class="item-row">
+                <input type="number" class="qty" placeholder="Qty" value="1" min="1" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Nama Menu" value="Air Mineral" oninput="updatePreview()">
                 <input type="number" class="price" placeholder="Harga" value="10000" oninput="updatePreview()">
                 <button class="btn btn-danger" onclick="removeItem(this)">X</button>
             </div>
@@ -244,58 +227,135 @@
         <h2 class="no-print" style="text-align: center; color: #555;">PREVIEW 58MM</h2>
         <div class="preview-wrapper">
             
-            <div id="receipt" class="tpl-1">
+            <div id="receipt" class="tpl-11">
                 
                 <div class="logo-container">
                     <img id="prevLogo" src="" alt="Logo">
                 </div>
 
-                <div class="head-info">
-                    <h3 id="prevName">FRESH FOOD</h3>
-                    <div id="prevAddress" style="white-space: pre-line;">Jalan Van Hou<br>Ten Belanda</div>
+                <div class="head-info" style="margin-bottom: 12px;">
+                    <h3 id="prevName">One Food Street</h3>
+                    <div id="prevAddress" style="white-space: pre-line;">One Batam Mall<br>Batam Kota, Kepulauan Riau<br>Indonesia</div>
                 </div>
                 
-                <div class="divider"></div>
-                
-                <div class="flex-between" style="margin-bottom: 5px;">
+                <div class="divider not-tpl11"></div>
+                <div class="flex-between not-tpl11" style="margin-bottom: 5px;">
                     <span id="prevDate"></span>
-                    <span>Kasir: Admin</span>
+                    <span>Kasir: <span class="cashierNameField">Admin</span></span>
+                </div>
+                <div class="divider not-tpl11"></div>
+
+                <div class="tpl11-only" style="margin-bottom: 5px;">
+                    <div class="flex-between">
+                        <span>Waktu Penjualan</span>
+                        <span>Kasir</span>
+                    </div>
+                    <div class="flex-between" style="margin-bottom: 2px;">
+                        <span id="prevDate11">29 Mei 2026 13:37</span>
+                        <span class="cashierNameField" style="white-space: nowrap; font-weight: bold;">Lika</span>
+                    </div>
+                    <div class="flex-between" style="align-items: flex-start;">
+                        <span id="prevReceiptNo" style="word-break: break-all; padding-right: 5px; font-weight: bold;">#A1F726052900</span>
+                        <span style="white-space: nowrap;">1 Tamu</span>
+                    </div>
                 </div>
                 
-                <div class="divider"></div>
+                <div class="divider-11 tpl11-only"></div>
+                <div class="text-center tpl11-only" style="margin-bottom: 8px; font-weight: bold;">DINE-IN (84)</div>
+
+                <div id="prevItems"></div>
                 
-                <div id="prevItems">
-                    </div>
-                
-                <div class="divider"></div>
-                
-                <div class="flex-between total-line">
+                <div class="divider not-tpl11"></div>
+                <div class="flex-between total-line not-tpl11">
                     <span>TOTAL</span>
                     <span id="prevTotal">Rp 0</span>
                 </div>
+                <div class="divider not-tpl11" style="margin-top:10px;"></div>
                 
-                <div class="divider" style="margin-top:10px;"></div>
-                <div class="text-center" style="font-size: 0.9em; margin-top: 5px;">
-                    Terima Kasih Atas<br>Kunjungan Anda<br>
-                    Silahkan Datang Kembali
+                <div class="divider-11 tpl11-only"></div>
+                <div class="tpl11-only" style="margin-bottom: 12px;">
+                    <div class="flex-between">
+                        <span>Subtotal</span>
+                        <span id="prevSubtotal11">0</span>
+                    </div>
+                    <div class="flex-between" style="font-weight: bold;">
+                        <span>Grand Total</span>
+                        <span id="prevGrandTotal11">Rp 0</span>
+                    </div>
+                    <div class="flex-between">
+                        <span id="prevPaymentMethod">QRIS</span>
+                        <span id="prevPaymentAmount11">Rp 0</span>
+                    </div>
+                </div>
+
+                <div id="prevFooter" class="text-center not-tpl11" style="font-size: 0.9em; margin-top: 5px; white-space: pre-line;"></div>
+
+                <div class="tpl11-only" style="margin-top: 12px; font-style: italic;">
+                    Dilayani Oleh : <span class="cashierNameField">Lika</span>
                 </div>
 
             </div>
-            </div>
+            
+        </div>
     </div>
 
     <script>
-        // Set Default Tanggal Input
+        // Bank Data Kalimat Footer
+        const footerTemplates = {
+            "tpl-1": "Terima Kasih Atas Kunjungan Anda\nNikmati Hidangan Spesial Kami!",
+            "tpl-2": "TERIMA KASIH\nSudah Makan Siang Bersama Kami",
+            "tpl-3": "Thank you for dining with us.\nHope to see you again soon!",
+            "tpl-4": "SUDAH DIBAYAR LUNAS\nKritik & Saran Hubungi: 08123456",
+            "tpl-5": "Rasa Bangga, Pelayanan Setulus Hati.\nTerima Kasih.",
+            "tpl-6": "KENYANG? AJAK TEMAN!\nLAPAR? DATANG LAGI!",
+            "tpl-7": "Selamat Menikmati!\nKami Tunggu Orderan Anda Berikutnya.",
+            "tpl-8": "Kepuasan Anda Kebanggaan Kami.\nTerima Kasih.",
+            "tpl-9": "STRUK LAYANAN MANDIRI\nSimpan Struk Ini Sebagai Bukti Ambil Menu.",
+            "tpl-10": "Makan Hemat & Nikmat.\nSuwun / Terima Kasih.",
+            "tpl-11": ""
+        };
+
+        // Data Acak Indonesia
+        const randomNames = ['Lika', 'Budi', 'Siti', 'Ayu', 'Rina', 'Andi', 'Putri', 'Agus', 'Dian', 'Reza'];
+        const randomPayMethods = ['Cash', 'QRIS', 'Debit BCA', 'Kartu Kredit'];
+        
+        const currentCashier = randomNames[Math.floor(Math.random() * randomNames.length)];
+        const currentPayMethod = randomPayMethods[Math.floor(Math.random() * randomPayMethods.length)];
+        
+        // PERBAIKAN: Fungsi Resi Dipotong Tepat Menjadi Format #A1F + 10 Karakter (Total 14 Karakter)
+        function generateReceiptID() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let res = '#A1F';
+            for(let i=0; i<10; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+            return res;
+        }
+        const currentReceiptNo = generateReceiptID();
+
+        // Terapkan data acak ke DOM
+        document.querySelectorAll('.cashierNameField').forEach(el => el.innerText = currentCashier);
+        document.getElementById('prevReceiptNo').innerText = currentReceiptNo;
+        document.getElementById('prevPaymentMethod').innerText = currentPayMethod;
+
+        // Set Default Tanggal
         const now = new Date();
         const tzOffset = now.getTimezoneOffset() * 60000;
         const localISOTime = (new Date(now - tzOffset)).toISOString().slice(0, 16);
         document.getElementById('transactionDate').value = localISOTime;
+        document.getElementById('footerMessage').value = footerTemplates["tpl-11"];
 
         function formatRp(angka) {
             return new Intl.NumberFormat('id-ID').format(angka);
         }
 
-        // Handle Upload Logo
+        function formatTanggalIndo(dateStr) {
+            const bulan = ['Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei', 'Mei']; 
+            // fallback nama bulan indonesia asli dinamis:
+            const bulanIndo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            const d = new Date(dateStr);
+            return d.getDate() + ' ' + bulanIndo[d.getMonth()] + ' ' + d.getFullYear() + ' ' + 
+                   d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+        }
+
         document.getElementById('logoInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             const logoImg = document.getElementById('prevLogo');
@@ -311,6 +371,12 @@
                 logoImg.src = '';
             }
         });
+
+        function handleTemplateChange() {
+            const selectVal = document.getElementById('templateSelect').value;
+            document.getElementById('footerMessage').value = footerTemplates[selectVal];
+            updatePreview();
+        }
 
         function addItem() {
             const container = document.getElementById('itemsContainer');
@@ -336,31 +402,37 @@
             const receipt = document.getElementById('receipt');
             receipt.className = template;
 
-            // KALIBRASI VIA SLIDER
+            // AMBIL NILAI DARI SEMUA SLIDER KALIBRASI
             const mLeft = document.getElementById('inputMarginLeft').value;
             const wTarget = document.getElementById('inputWidth').value;
+            const fSize = document.getElementById('inputFontSize').value; // Fitur Font Size Baru
             
             document.getElementById('valMargin').innerText = mLeft + " mm";
             document.getElementById('valWidth').innerText = wTarget + " mm";
+            document.getElementById('valFontSize').innerText = fSize + " px";
 
-            // Terapkan langsung ke elemen struk
+            // Terapkan Dinamis ke Struk (Juga Berlaku Saat Dicetak)
             receipt.style.marginLeft = mLeft + "mm";
             receipt.style.width = wTarget + "mm";
             receipt.style.maxWidth = wTarget + "mm";
+            receipt.style.fontSize = fSize + "px"; // Mengubah ukuran karakter secara merata
 
-            // Update Konten Teks
+            // Teks Konten
             document.getElementById('prevName').innerText = document.getElementById('restoName').value || 'NAMA RESTO';
             document.getElementById('prevAddress').innerText = document.getElementById('restoAddress').value;
+            document.getElementById('prevFooter').innerText = document.getElementById('footerMessage').value;
 
             const dateInput = document.getElementById('transactionDate').value;
             if (dateInput) {
                 const d = new Date(dateInput);
-                const formattedDate = d.getDate().toString().padStart(2, '0') + '/' + 
+                const formatStandard = d.getDate().toString().padStart(2, '0') + '/' + 
                                       (d.getMonth() + 1).toString().padStart(2, '0') + '/' + 
                                       d.getFullYear() + ' ' + 
                                       d.getHours().toString().padStart(2, '0') + ':' + 
                                       d.getMinutes().toString().padStart(2, '0');
-                document.getElementById('prevDate').innerText = formattedDate;
+                
+                document.getElementById('prevDate').innerText = formatStandard;
+                document.getElementById('prevDate11').innerText = formatTanggalIndo(dateInput);
             }
 
             const itemRows = document.querySelectorAll('.item-row');
@@ -375,20 +447,37 @@
                 
                 if (qty > 0 && name.trim() !== '') {
                     total += subtotal;
-                    itemsHTML += `
-                        <div style="margin-bottom: 4px;">
-                            <div>${name}</div>
-                            <div class="flex-between">
-                                <span style="flex:1; padding-right:5px; word-break: break-all;">${qty} x ${formatRp(price)}</span>
-                                <span style="white-space: nowrap;">${formatRp(subtotal)}</span>
+                    
+                    if(template === 'tpl-11') {
+                        itemsHTML += `
+                            <div style="margin-bottom: 5px;">
+                                <div style="margin-bottom: 1px;">${name}</div>
+                                <div class="flex-between">
+                                    <span style="padding-left: 12px; white-space: nowrap;">${formatRp(price)} x${qty}</span>
+                                    <span style="white-space: nowrap;">${formatRp(subtotal)}</span>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else {
+                        itemsHTML += `
+                            <div style="margin-bottom: 4px;">
+                                <div>${name}</div>
+                                <div class="flex-between">
+                                    <span style="flex:1; padding-right:5px; word-break: break-all;">${qty} x ${formatRp(price)}</span>
+                                    <span style="white-space: nowrap;">${formatRp(subtotal)}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             });
 
             document.getElementById('prevItems').innerHTML = itemsHTML;
+            
             document.getElementById('prevTotal').innerText = 'Rp ' + formatRp(total);
+            document.getElementById('prevSubtotal11').innerText = formatRp(total);
+            document.getElementById('prevGrandTotal11').innerText = 'Rp ' + formatRp(total);
+            document.getElementById('prevPaymentAmount11').innerText = 'Rp ' + formatRp(total);
         }
 
         updatePreview();
