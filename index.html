@@ -65,12 +65,18 @@
         .flex-between { display: flex; justify-content: space-between; gap: 4px; width: 100%; }
         .text-center { text-align: center; }
         
-        /* === LOGIKA SWITCH ELEMEN TPL-11 === */
-        .tpl11-only { display: none; }
+        /* === LOGIKA SWITCH ELEMEN DESAIN SPESIFIK === */
+        .tpl11-only, .tpl12-only { display: none; }
+        
+        /* Jika TPL 11 Aktif */
         .tpl-11 .tpl11-only { display: block; }
         .tpl-11 .not-tpl11 { display: none !important; }
+        
+        /* Jika TPL 12 Aktif */
+        .tpl-12 .tpl12-only { display: block; }
+        .tpl-12 .not-tpl12 { display: none !important; }
 
-        /* === 11 MODALITAS TEMPLATE UTAMA (DENGAN EM/RELATIF FONT) === */
+        /* === 12 MODALITAS TEMPLATE UTAMA === */
         .tpl-1 { font-family: 'Courier New', Courier, monospace; }
         .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 5px 0; }
         .tpl-1 h3 { text-align: center; font-size: 1.3em; margin: 0 0 4px 0; text-transform: uppercase; }
@@ -133,11 +139,14 @@
         .tpl-10 .head-info { text-align: center; }
         .tpl-10 .total-line { font-weight: bold; margin-top: 3px; padding-top: 3px; border-top: 1px solid #000; }
 
-        /* KHUSUS DESAIN 11 (Ciri Khas Masing-Masing Sektor) */
+        /* KHUSUS DESAIN 11 */
         .tpl-11 { font-family: 'Arial', sans-serif; letter-spacing: 0.1px; }
         .tpl-11 .head-info { text-align: center; }
         .tpl-11 .head-info h3 { font-size: 1.3em; margin: 0 0 3px 0; font-weight: bold; text-align: center; }
         .tpl-11 .divider-11 { border-bottom: 1px dashed #000; margin: 6px 0; }
+
+        /* KHUSUS DESAIN 12 (BETEL BOX HOSTEL) */
+        .tpl-12 { font-family: 'Courier New', Courier, monospace; letter-spacing: 0.5px; }
 
         /* === ATURAN KRUSIAL PRINT === */
         @media print {
@@ -159,16 +168,16 @@
     <div class="panel">
         <h2>KASIR STRUK THERMAL</h2>
         
-        <!-- Tab Navigasi Sektor Bisnis (Ditambah Tab ke-4) -->
+        <!-- Tab Navigasi Sektor Bisnis -->
         <div class="tabs">
             <button class="tab-btn tab-resto active" onclick="switchTab('restaurant')">Restaurant</button>
             <button class="tab-btn tab-stat" onclick="switchTab('stationary')">Stationary</button>
             <button class="tab-btn tab-apotek" onclick="switchTab('apotek')">Apotek</button>
-            <button class="tab-btn tab-singtrade" onclick="switchTab('singtrade')">SingTrade / Audio</button>
+            <button class="tab-btn tab-singtrade" onclick="switchTab('singtrade')">SingTrade / Hotel</button>
         </div>
         
         <div class="form-group">
-            <label>Pilih Desain Struk (1-11)</label>
+            <label>Pilih Desain Struk (1-12)</label>
             <select id="templateSelect" onchange="handleTemplateChange()">
                 <option value="tpl-1">1. Klasik (Dashed, Center)</option>
                 <option value="tpl-2">2. Modern (Solid, Sans-serif)</option>
@@ -180,7 +189,8 @@
                 <option value="tpl-8">8. Rata Kanan (Right Align Header)</option>
                 <option value="tpl-9">9. Tiket Perjamuan / Nota Dotted</option>
                 <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
-                <option value="tpl-11" selected>11. Desain Khusus Sektor Bisnis (Spesial)</option>
+                <option value="tpl-11">11. Ciri Khas Sektor Bisnis (Spesial)</option>
+                <option value="tpl-12" selected>12. Betel Box Hostel (Spesial SingTrade/Hotel)</option>
             </select>
         </div>
 
@@ -254,7 +264,7 @@
             </div>
         </div>
 
-        <!-- 4. SINGTRADE (KHALISA AUDIO) FIELDS -->
+        <!-- 4. SINGTRADE / HOTEL FIELDS -->
         <div id="fields-singtrade" class="category-fields">
             <div class="form-group">
                 <label>Company Name</label>
@@ -265,10 +275,18 @@
                 <input type="text" id="singAddress" value="1 Rochor Canal Rd, #02-12&#10;Sim Lim Square, Singapore 188504&#10;GST Reg No: 201234567Z" oninput="updatePreview()">
             </div>
             <div class="form-group" style="background: #fdf2e9; padding: 8px; border-radius: 6px; border: 1px solid #fae5d3;">
-                <label style="color: #d35400;">🎧 Invoice Details</label>
+                <label style="color: #d35400;">🏨 Hotel / Customer Details</label>
                 <div style="margin-top: 5px;">
-                    <label style="font-weight: normal; font-size: 0.85rem;">Customer Name (Optional)</label>
-                    <input type="text" id="singCustomer" value="Mr. John Doe" oninput="updatePreview()" style="padding: 6px;">
+                    <label style="font-weight: normal; font-size: 0.85rem;">Guest / Customer Name</label>
+                    <input type="text" id="singCustomer" value="Indah Mayang" oninput="updatePreview()" style="padding: 6px;">
+                </div>
+                <div style="margin-top: 5px;">
+                    <label style="font-weight: normal; font-size: 0.85rem;">Date In (Format bebas, misal 30/10/25)</label>
+                    <input type="text" id="hotelDateIn" value="30/10/25" oninput="updatePreview()" style="padding: 6px;">
+                </div>
+                <div style="margin-top: 5px;">
+                    <label style="font-weight: normal; font-size: 0.85rem;">Final Night (Format bebas)</label>
+                    <input type="text" id="hotelDateOut" value="" oninput="updatePreview()" style="padding: 6px;">
                 </div>
             </div>
         </div>
@@ -285,7 +303,7 @@
 
         <!-- DAFTAR ITEM INPUT -->
         <h2 style="margin-top: 20px;">
-            DAFTAR BARANG/MENU
+            DAFTAR BARANG/MENU/KAMAR
             <button class="btn btn-primary" onclick="addItem()" style="font-size: 11px; padding: 5px 10px;">+ Tambah</button>
         </h2>
         
@@ -308,133 +326,178 @@
         <div class="preview-wrapper">
             
             <!-- BLOK KERTAS STRUK THERMAL -->
-            <div id="receipt" class="tpl-11">
+            <div id="receipt" class="tpl-12">
                 
-                <div class="logo-container">
-                    <img id="prevLogo" src="" alt="Logo">
-                </div>
+                <!-- BUNGKUSAN UNTUK TEMPLATE 1 HINGGA 11 -->
+                <div class="not-tpl12">
+                    <div class="logo-container">
+                        <img id="prevLogo" src="" alt="Logo">
+                    </div>
 
-                <!-- INFO HEADER UTAMA -->
-                <div class="head-info" style="margin-bottom: 12px;">
-                    <h3 id="prevName">One Food Street</h3>
-                    <div id="prevAddress" style="white-space: pre-line;">One Batam Mall<br>Batam Kota, Kepulauan Riau</div>
-                </div>
-                
-                <!-- BLOK METADATA STANDAR (TPL 1-10) -->
-                <div class="divider not-tpl11"></div>
-                <div class="not-tpl11" style="margin-bottom: 5px; font-size: 0.95em;">
-                    <div class="flex-between">
-                        <span>No: <span id="prevReceiptNoGen">#A1F726052900</span></span>
-                        <span>Kasir: <span class="cashierNameField">Admin</span></span>
+                    <div class="head-info" style="margin-bottom: 12px;">
+                        <h3 id="prevName">One Food Street</h3>
+                        <div id="prevAddress" style="white-space: pre-line;">One Batam Mall<br>Batam Kota, Kepulauan Riau</div>
                     </div>
-                    <div id="prevDate">29/05/2026 13:37</div>
-                </div>
-                
-                <!-- BLOK INFORMASI KLINIK REVENUE KHUSUS APOTEK (TPL 1-10) -->
-                <div class="not-tpl11 apotek-meta-block" style="margin-bottom: 5px; font-size: 0.9em; border-top: 1px dashed #000; padding-top: 4px; display:none;">
-                    <div>Dokter : <span id="prevApoDokter">Dr. Hendrawan Sp.A</span></div>
-                    <div>Pasien : <span id="prevApoPasien">Tn. Rahmat Dani</span></div>
-                </div>
-                <div class="divider not-tpl11"></div>
+                    
+                    <div class="divider not-tpl11"></div>
+                    <div class="not-tpl11" style="margin-bottom: 5px; font-size: 0.95em;">
+                        <div class="flex-between">
+                            <span>No: <span id="prevReceiptNoGen">#A1F726052900</span></span>
+                            <span>Kasir: <span class="cashierNameField">Admin</span></span>
+                        </div>
+                        <div id="prevDate">29/05/2026 13:37</div>
+                    </div>
+                    
+                    <div class="not-tpl11 apotek-meta-block" style="margin-bottom: 5px; font-size: 0.9em; border-top: 1px dashed #000; padding-top: 4px; display:none;">
+                        <div>Dokter : <span id="prevApoDokter">Dr. Hendrawan Sp.A</span></div>
+                        <div>Pasien : <span id="prevApoPasien">Tn. Rahmat Dani</span></div>
+                    </div>
+                    <div class="divider not-tpl11"></div>
 
-                <!-- === KHUSUS TPL 11 SEKTOR RESTORAN === -->
-                <div class="tpl11-only section-tpl11-restaurant" style="margin-bottom: 5px;">
-                    <div class="flex-between">
-                        <span>Waktu Penjualan</span>
-                        <span>Kasir</span>
+                    <!-- TPL 11 Sections -->
+                    <div class="tpl11-only section-tpl11-restaurant" style="margin-bottom: 5px;">
+                        <div class="flex-between">
+                            <span>Waktu Penjualan</span>
+                            <span>Kasir</span>
+                        </div>
+                        <div class="flex-between" style="margin-bottom: 2px;">
+                            <span class="prevDateIndo">29 Mei 2026 13:37</span>
+                            <span class="cashierNameField" style="font-weight: bold;">Lika</span>
+                        </div>
+                        <div class="flex-between">
+                            <span class="prevReceiptNoField" style="font-weight: bold;">#A1FXNJLGPYS41</span>
+                            <span>1 Tamu</span>
+                        </div>
+                        <div class="divider-11"></div>
+                        <div class="text-center" style="font-weight: bold; margin: 4px 0;">DINE-IN (84)</div>
                     </div>
-                    <div class="flex-between" style="margin-bottom: 2px;">
-                        <span class="prevDateIndo">29 Mei 2026 13:37</span>
-                        <span class="cashierNameField" style="font-weight: bold;">Lika</span>
-                    </div>
-                    <div class="flex-between">
-                        <span class="prevReceiptNoField" style="font-weight: bold;">#A1FXNJLGPYS41</span>
-                        <span>1 Tamu</span>
-                    </div>
-                    <div class="divider-11"></div>
-                    <div class="text-center" style="font-weight: bold; margin: 4px 0;">DINE-IN (84)</div>
-                </div>
 
-                <!-- === KHUSUS TPL 11 SEKTOR STATIONARY === -->
-                <div class="tpl11-only section-tpl11-stationary" style="margin-bottom: 5px;">
-                    <div class="flex-between">
-                        <span>Faktur No: <span class="prevReceiptNoField">#A1FXNJLGPYS41</span></span>
-                        <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                    <div class="tpl11-only section-tpl11-stationary" style="margin-bottom: 5px;">
+                        <div class="flex-between">
+                            <span>Faktur No: <span class="prevReceiptNoField">#A1FXNJLGPYS41</span></span>
+                            <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                        </div>
+                        <div class="flex-between">
+                            <span>Tanggal : <span class="prevDateIndo">29 Mei 2026</span></span>
+                            <span style="font-weight: bold; color: #000;">RETAIL</span>
+                        </div>
+                        <div class="divider-11"></div>
                     </div>
-                    <div class="flex-between">
-                        <span>Tanggal : <span class="prevDateIndo">29 Mei 2026</span></span>
-                        <span style="font-weight: bold; color: #000;">RETAIL</span>
-                    </div>
-                    <div class="divider-11"></div>
-                </div>
 
-                <!-- === KHUSUS TPL 11 SEKTOR APOTEK === -->
-                <div class="tpl11-only section-tpl11-apotek" style="margin-bottom: 5px;">
-                    <div class="flex-between">
-                        <span>Tgl/Jam : <span class="prevDateIndo">29 Mei 2026</span></span>
-                        <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                    <div class="tpl11-only section-tpl11-apotek" style="margin-bottom: 5px;">
+                        <div class="flex-between">
+                            <span>Tgl/Jam : <span class="prevDateIndo">29 Mei 2026</span></span>
+                            <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                        </div>
+                        <div style="border-top: 1px dotted #000; margin: 4px 0; padding-top: 4px;">
+                            <div>Dokter : <span id="prevApoDokter11">Dr. Hendrawan Sp.A</span></div>
+                            <div>Pasien : <span id="prevApoPasien11">Tn. Rahmat Dani</span></div>
+                            <div>No. Resep: <span id="prevApoResep11">R-99212</span></div>
+                        </div>
+                        <div class="divider-11"></div>
                     </div>
-                    <div style="border-top: 1px dotted #000; margin: 4px 0; padding-top: 4px;">
-                        <div>Dokter : <span id="prevApoDokter11">Dr. Hendrawan Sp.A</span></div>
-                        <div>Pasien : <span id="prevApoPasien11">Tn. Rahmat Dani</span></div>
-                        <div>No. Resep: <span id="prevApoResep11">R-99212</span></div>
-                    </div>
-                    <div class="divider-11"></div>
-                </div>
 
-                <!-- === KHUSUS TPL 11 SEKTOR SINGTRADE === -->
-                <div class="tpl11-only section-tpl11-singtrade" style="margin-bottom: 5px;">
-                    <div class="text-center" style="font-weight: bold; font-size: 1.1em; margin-bottom: 6px;">TAX INVOICE</div>
-                    <div class="flex-between">
-                        <span>Inv No: <span class="prevReceiptNoField"></span></span>
-                        <span>Date: <span class="prevDateIndo"></span></span>
+                    <div class="tpl11-only section-tpl11-singtrade" style="margin-bottom: 5px;">
+                        <div class="text-center" style="font-weight: bold; font-size: 1.1em; margin-bottom: 6px;">TAX INVOICE</div>
+                        <div class="flex-between">
+                            <span>Inv No: <span class="prevReceiptNoField"></span></span>
+                            <span>Date: <span class="prevDateIndo"></span></span>
+                        </div>
+                        <div class="flex-between" style="margin-bottom: 4px;">
+                            <span>Sales: <span class="cashierNameField"></span></span>
+                            <span>Cust: <span id="prevSingCust"></span></span>
+                        </div>
+                        <div class="divider-11"></div>
                     </div>
-                    <div class="flex-between" style="margin-bottom: 4px;">
-                        <span>Sales: <span class="cashierNameField"></span></span>
-                        <span>Cust: <span id="prevSingCust"></span></span>
-                    </div>
-                    <div class="divider-11"></div>
-                </div>
 
-                <!-- DAFTAR ITEM DINAMIS -->
-                <div id="prevItems"></div>
-                
-                <!-- AKUMULASI FINANSIAL STANDAR TPL 1-10 -->
-                <div class="divider not-tpl11"></div>
-                <div class="flex-between total-line not-tpl11">
-                    <span>TOTAL</span>
-                    <span class="prevTotalField">Rp 0</span>
-                </div>
-                <div class="divider not-tpl11" style="margin-top:10px;"></div>
-                
-                <!-- AKUMULASI FINANSIAL KHUSUS TPL 11 (TAMPIL DI SEMUA SEKTOR KETIKA TPL-11 AKTIF) -->
-                <div class="divider-11 tpl11-only"></div>
-                <div class="tpl11-only" style="margin-bottom: 12px;">
-                    <div class="flex-between">
-                        <span>Subtotal</span>
-                        <span class="prevSubtotalValue">0</span>
-                    </div>
-                    <div class="flex-between" style="font-weight: bold;">
-                        <span>Grand Total</span>
+                    <!-- DAFTAR ITEM TPL 1-11 -->
+                    <div id="prevItems"></div>
+                    
+                    <div class="divider not-tpl11"></div>
+                    <div class="flex-between total-line not-tpl11">
+                        <span>TOTAL</span>
                         <span class="prevTotalField">Rp 0</span>
                     </div>
-                    <div class="flex-between">
-                        <span id="prevPaymentMethod">QRIS</span>
-                        <span class="prevTotalField">Rp 0</span>
+                    <div class="divider not-tpl11" style="margin-top:10px;"></div>
+                    
+                    <div class="divider-11 tpl11-only"></div>
+                    <div class="tpl11-only" style="margin-bottom: 12px;">
+                        <div class="flex-between">
+                            <span>Subtotal</span>
+                            <span class="prevSubtotalValue">0</span>
+                        </div>
+                        <div class="flex-between" style="font-weight: bold;">
+                            <span>Grand Total</span>
+                            <span class="prevTotalField">Rp 0</span>
+                        </div>
+                        <div class="flex-between">
+                            <span id="prevPaymentMethod">QRIS</span>
+                            <span class="prevTotalField">Rp 0</span>
+                        </div>
+                        <div class="flex-between section-tpl11-stationary-bonus" style="font-size: 0.85em; font-style: italic; border-top: 1px dashed #000; margin-top: 4px; padding-top: 4px; display: none;">
+                            <span>Poin Member yang didapat</span>
+                            <span>+15 Poin</span>
+                        </div>
                     </div>
-                    <!-- Khusus Stationary tpl 11 bonus info poin -->
-                    <div class="flex-between section-tpl11-stationary-bonus" style="font-size: 0.85em; font-style: italic; border-top: 1px dashed #000; margin-top: 4px; padding-top: 4px; display: none;">
-                        <span>Poin Member yang didapat</span>
-                        <span>+15 Poin</span>
+
+                    <div id="prevFooter" class="text-center" style="font-size: 0.95em; margin-top: 8px; white-space: pre-line;"></div>
+                    
+                    <div class="tpl11-only section-tpl11-restaurant" style="margin-top: 12px; font-style: italic;">
+                        Dilayani Oleh : <span class="cashierNameField">Lika</span>
                     </div>
                 </div>
 
-                <!-- FOOTER GENERATOR -->
-                <div id="prevFooter" class="text-center" style="font-size: 0.95em; margin-top: 8px; white-space: pre-line;"></div>
-                
-                <!-- Footer Tambahan Penutup khusus Tpl 11 Resto -->
-                <div class="tpl11-only section-tpl11-restaurant" style="margin-top: 12px; font-style: italic;">
-                    Dilayani Oleh : <span class="cashierNameField">Lika</span>
+                <!-- === KHUSUS TPL 12 (BETEL BOX HOSTEL) === -->
+                <div class="tpl12-only section-tpl12-hotel">
+                    <!-- Header Betel Box Hardcoded sesuai permintaan layout -->
+                    <div class="text-center" style="white-space: pre-line; line-height: 1.1; margin-bottom: 10px;">
+BETEL BOX
+HOSTEL & TOURS
+www.betelbox.com
+www.betelbox.tours.com
+
+200 JOO CHIAT RD S427471
+
+** DUPLICATE RECEIPT **
+                    </div>
+                    
+                    <div style="margin-bottom: 8px;">
+                        <div class="flex-between">
+                            <span>REG &nbsp;&nbsp;<span id="prevDate12"></span></span>
+                        </div>
+                        <div class="flex-between">
+                            <span id="prevCNum12">C01</span>
+                            <span id="prevRand5_12">000004</span>
+                        </div>
+                    </div>
+                    
+                    <!-- DAFTAR ITEM TPL 12 -->
+                    <div id="prevItems12"></div>
+                    
+                    <!-- AREA TOTAL TPL 12 -->
+                    <div style="margin-top: 15px;">
+                        <div class="text-center" style="margin-bottom: 5px;"><span id="prevQtyNo12">1 NO</span></div>
+                        <div class="flex-between" style="font-size: 1.25em; font-weight: bold; margin-bottom: 2px;">
+                            <span>TOTAL</span>
+                            <span id="prevTotal12_large">$34.20</span>
+                        </div>
+                        <div class="flex-between">
+                            <span>CASH</span>
+                            <span id="prevTotal12_small">$34.20</span>
+                        </div>
+                        <div class="text-center" style="margin-top: 8px; font-size: 0.9em;">
+                            * INVOICE No . * <span id="prevInv12">014446</span>
+                        </div>
+                    </div>
+                    
+                    <!-- DETAIL GUEST TPL 12 -->
+                    <div style="margin-top: 20px; text-align: left; line-height: 1.5; font-size: 0.95em;">
+                        <div>BUNK # : </div>
+                        <div>NAME   : <span id="prevHotelName12"></span></div>
+                        <div>DATE IN : <span id="prevDateIn12"></span></div>
+                        <div>FINAL NIGHT : <span id="prevDateOut12"></span></div>
+                    </div>
+
                 </div>
 
             </div>
@@ -444,8 +507,8 @@
 
     <script>
         // DATA CENTRAL SAKTI UNTUK 4 SEKTOR BISNIS
-        let currentTab = 'restaurant';
-        let currencySymbol = 'Rp ';
+        let currentTab = 'singtrade';
+        let currencySymbol = '$ ';
         
         const sectorData = {
             restaurant: {
@@ -470,7 +533,8 @@
                     "tpl-8": "Kepuasan Anda Kebanggaan Kami.\nTerima Kasih.",
                     "tpl-9": "STRUK LAYANAN MANDIRI\nSimpan Struk Bukti Ambil Menu.",
                     "tpl-10": "Makan Hemat & Nikmat.\nSuwun / Terima Kasih.",
-                    "tpl-11": "Harga Sudah Termasuk PB1 (10%)\nSelamat Menikmati Hidangan Anda!"
+                    "tpl-11": "Harga Sudah Termasuk PB1 (10%)\nSelamat Menikmati Hidangan Anda!",
+                    "tpl-12": ""
                 }
             },
             stationary: {
@@ -496,7 +560,8 @@
                     "tpl-8": "Simpan Struk Ini\nSebagai Bukti Garansi Produk Elektronik Kantor.",
                     "tpl-9": "NOTA ATK DOTTED SYSTEM\nCustomer Copy",
                     "tpl-10": "Maturnuwun.\nBelanja Cerdas Hemat Kertas.",
-                    "tpl-11": "Terima Kasih Telah Menjadi Member Setia!\nPoin Anda Otomatis Ditambahkan Di Database."
+                    "tpl-11": "Terima Kasih Telah Menjadi Member Setia!\nPoin Anda Otomatis Ditambahkan Di Database.",
+                    "tpl-12": ""
                 }
             },
             apotek: {
@@ -522,7 +587,8 @@
                     "tpl-8": "Terima Kasih.\nPeriksa Masa Kadaluarsa Obat Sebelum Diminum.",
                     "tpl-9": "NOTA KHUSUS FARMASI\nLayanan 24 Jam Nonstop",
                     "tpl-10": "Sehat Selalu.\nMatur Nuwun.",
-                    "tpl-11": "Semoga Lekas Sembuh & Sehat Kembali.\nTerima Kasih Atas Kepercayaan Anda."
+                    "tpl-11": "Semoga Lekas Sembuh & Sehat Kembali.\nTerima Kasih Atas Kepercayaan Anda.",
+                    "tpl-12": ""
                 }
             },
             singtrade: {
@@ -532,9 +598,7 @@
                 cashiers: ['Alex (Sales)', 'David', 'Sarah', 'Michael', 'Chloe'],
                 payments: ['PayNow', 'NETS', 'VISA', 'MasterCard', 'Cash'],
                 defaultItems: [
-                    { qty: 1, name: 'Shure SM58 Dynamic Mic', price: 159.00 },
-                    { qty: 2, name: 'XLR Cable 3m', price: 25.50 },
-                    { qty: 1, name: 'Focusrite Scarlett 2i2', price: 289.00 }
+                    { qty: 1, name: '18 BED MIX', price: 34.20 }
                 ],
                 footers: {
                     "tpl-1": "Thank you for your purchase!\nPlease keep this receipt for warranty.",
@@ -547,15 +611,22 @@
                     "tpl-8": "Retain this invoice for warranty registration.\nThank you.",
                     "tpl-9": "SINGTRADE AUDIO RECEIPT\nCustomer Copy",
                     "tpl-10": "Thank you.\nHave a great day.",
-                    "tpl-11": "All products come with 1-Year Local Warranty.\nThank you for shopping at SingTrade!"
+                    "tpl-11": "All products come with 1-Year Local Warranty.\nThank you for shopping at SingTrade!",
+                    "tpl-12": ""
                 }
             }
         };
 
+        // Variable Acak Global
         let currentCashier = '';
         let currentPayMethod = '';
         let currentReceiptNo = '';
         let currentResepId = '';
+        
+        // Variabel Acak Khusus Tpl 12
+        let currentCNum12 = '';
+        let currentRand5_12 = '';
+        let currentInv12 = '';
 
         function generateRandomSectorVariables(sec) {
             const pool = sectorData[sec];
@@ -568,6 +639,11 @@
             currentReceiptNo = res;
 
             currentResepId = "R-" + Math.floor(10000 + Math.random() * 90000);
+            
+            // Random untuk Betel Box Tpl 12
+            currentCNum12 = 'C' + Math.floor(Math.random() * 90 + 10).toString().padStart(2, '0');
+            currentRand5_12 = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+            currentInv12 = '01' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
         }
 
         function switchTab(target) {
@@ -584,7 +660,7 @@
             generateRandomSectorVariables(target);
 
             const currentTpl = document.getElementById('templateSelect').value;
-            document.getElementById('footerMessage').value = sectorData[target].footers[currentTpl];
+            document.getElementById('footerMessage').value = sectorData[target].footers[currentTpl] || "";
 
             const container = document.getElementById('itemsContainer');
             container.innerHTML = '';
@@ -610,7 +686,7 @@
 
         function handleTemplateChange() {
             const selectVal = document.getElementById('templateSelect').value;
-            document.getElementById('footerMessage').value = sectorData[currentTab].footers[selectVal];
+            document.getElementById('footerMessage').value = sectorData[currentTab].footers[selectVal] || "";
             updatePreview();
         }
 
@@ -633,6 +709,15 @@
                 return d.getDate() + ' ' + bulanIndo[d.getMonth()] + ' ' + d.getFullYear() + ' ' + 
                        d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
             }
+        }
+        
+        function formatTanggalDash(dateStr) {
+            const d = new Date(dateStr);
+            return d.getDate().toString().padStart(2, '0') + '-' + 
+                   (d.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                   d.getFullYear() + ' ' + 
+                   d.getHours().toString().padStart(2, '0') + ':' + 
+                   d.getMinutes().toString().padStart(2, '0');
         }
 
         function addItem() {
@@ -694,7 +779,6 @@
             let currentTitle = '';
             let currentAddress = '';
 
-            // PERBAIKAN: Hanya hide spesifik seksi, jangan hide tpl11-only global!
             document.querySelectorAll('.section-tpl11-restaurant, .section-tpl11-stationary, .section-tpl11-apotek, .section-tpl11-singtrade').forEach(el => el.style.display = 'none');
             document.querySelector('.section-tpl11-stationary-bonus').style.display = 'none';
 
@@ -729,7 +813,13 @@
             } else if (currentTab === 'singtrade') {
                 currentTitle = document.getElementById('singName').value;
                 currentAddress = document.getElementById('singAddress').value;
+                
                 document.getElementById('prevSingCust').innerText = document.getElementById('singCustomer').value || 'Cash Customer';
+                
+                // Binding khusus untuk TPL-12 (Betel Box Hotel)
+                document.getElementById('prevHotelName12').innerText = document.getElementById('singCustomer').value;
+                document.getElementById('prevDateIn12').innerText = document.getElementById('hotelDateIn').value;
+                document.getElementById('prevDateOut12').innerText = document.getElementById('hotelDateOut').value;
                 
                 if(template === 'tpl-11') {
                     document.querySelectorAll('.section-tpl11-singtrade').forEach(el => el.style.display = 'block');
@@ -744,6 +834,11 @@
             document.querySelectorAll('.prevReceiptNoField').forEach(el => el.innerText = currentReceiptNo);
             document.getElementById('prevReceiptNoGen').innerText = currentReceiptNo;
             document.getElementById('prevPaymentMethod').innerText = currentPayMethod;
+            
+            // Random TPL 12 Bindings
+            document.getElementById('prevCNum12').innerText = currentCNum12;
+            document.getElementById('prevRand5_12').innerText = currentRand5_12;
+            document.getElementById('prevInv12').innerText = currentInv12;
 
             const dateInput = document.getElementById('transactionDate').value;
             if (dateInput) {
@@ -756,11 +851,14 @@
                 
                 document.getElementById('prevDate').innerText = formatStandard;
                 document.querySelectorAll('.prevDateIndo').forEach(el => el.innerText = formatTanggal(dateInput));
+                document.getElementById('prevDate12').innerText = formatTanggalDash(dateInput);
             }
 
             const itemRows = document.querySelectorAll('.item-row');
             let itemsHTML = '';
+            let itemsHTML12 = ''; // Khusus Desain 12
             let total = 0;
+            let totalQty12 = 0;
 
             itemRows.forEach(row => {
                 const qty = parseInt(row.querySelector('.qty').value) || 0;
@@ -775,8 +873,20 @@
 
                 if (qty > 0 && name.trim() !== '') {
                     total += subtotal;
+                    totalQty12 += qty;
                     
-                    if(template === 'tpl-11') {
+                    if(template === 'tpl-12') {
+                        // Layout Spesifik Betel Box
+                        itemsHTML12 += `
+                            <div style="margin-bottom: 8px;">
+                                <div>${name}</div>
+                                <div class="flex-between">
+                                    <span style="padding-left: 15px; white-space: nowrap;">${qty}X @${formatCurrency(price)}</span>
+                                    <span style="white-space: nowrap;">$${formatCurrency(subtotal)}</span>
+                                </div>
+                            </div>
+                        `;
+                    } else if(template === 'tpl-11') {
                         itemsHTML += `
                             <div style="margin-bottom: 5px;">
                                 <div style="margin-bottom: 1px;">${name}</div>
@@ -801,16 +911,30 @@
             });
 
             document.getElementById('prevItems').innerHTML = itemsHTML;
+            document.getElementById('prevItems12').innerHTML = itemsHTML12;
             
+            // Total UI
             document.getElementById('uiGrandTotal').innerText = currencySymbol + formatCurrency(total);
 
+            // Total TPL 1-11
             document.querySelectorAll('.prevTotalField').forEach(el => el.innerText = currencySymbol + formatCurrency(total));
             document.querySelector('.prevSubtotalValue').innerText = formatCurrency(total);
+            
+            // Total TPL 12 (Hardcoded '$' Sesuai Foto Struk)
+            document.getElementById('prevQtyNo12').innerText = totalQty12 + " NO";
+            document.getElementById('prevTotal12_large').innerText = "$" + formatCurrency(total);
+            document.getElementById('prevTotal12_small').innerText = "$" + formatCurrency(total);
         }
 
         window.onload = function() {
-            generateRandomSectorVariables('restaurant');
-            document.querySelector('.tab-resto').click();
+            generateRandomSectorVariables('singtrade');
+            document.querySelector('.tab-singtrade').click();
+            
+            // Set Tanggal Awal
+            const now = new Date();
+            const tzOffset = now.getTimezoneOffset() * 60000;
+            const localISOTime = (new Date(now - tzOffset)).toISOString().slice(0, 16);
+            document.getElementById('transactionDate').value = localISOTime;
         };
     </script>
 </body>
