@@ -207,13 +207,15 @@
         .text-center { text-align: center; }
         
         /* === LOGIKA SWITCH ELEMEN DESAIN SPESIFIK === */
-        .tpl11-only, .tpl12-only { display: none; }
+        .tpl11-only, .tpl12-only, .tpl13-only { display: none; }
         .tpl-11 .tpl11-only { display: block; }
         .tpl-11 .not-tpl11 { display: none !important; }
         .tpl-12 .tpl12-only { display: block; }
         .tpl-12 .not-tpl12 { display: none !important; }
+        .tpl-13 .tpl13-only { display: block; }
+        .tpl-13 .not-tpl13 { display: none !important; }
 
-        /* === 12 MODALITAS TEMPLATE UTAMA === */
+        /* === 13 MODALITAS TEMPLATE UTAMA === */
         .tpl-1 { font-family: 'Courier Prime', 'Courier New', Courier, monospace; }
         .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 5px 0; }
         .tpl-1 h3 { text-align: center; font-size: 1.3em; margin: 0 0 4px 0; text-transform: uppercase; }
@@ -276,12 +278,14 @@
         .tpl-10 .head-info { text-align: center; }
         .tpl-10 .total-line { font-weight: bold; margin-top: 3px; padding-top: 3px; border-top: 1px solid #000; }
 
-        /* KHUSUS DESAIN 11 & 12 */
+        /* KHUSUS DESAIN 11, 12, 13 */
         .tpl-11 { font-family: 'Arial', sans-serif; letter-spacing: 0.1px; }
         .tpl-11 .head-info { text-align: center; }
         .tpl-11 .head-info h3 { font-size: 1.3em; margin: 0 0 3px 0; font-weight: bold; text-align: center; }
         .tpl-11 .divider-11 { border-bottom: 1px dashed #000; margin: 6px 0; }
         .tpl-12 { font-family: 'Courier Prime', Courier, monospace; letter-spacing: 0.5px; }
+        .tpl-13 { font-family: 'Courier Prime', Courier, monospace; letter-spacing: 0px; color: #2d3082; text-transform: uppercase; }
+        .tpl-13 .divider-13 { border-bottom: 1px dashed #2d3082; margin: 6px 0; }
 
         /* === ATURAN KRUSIAL PRINT === */
         @media print {
@@ -335,6 +339,7 @@
                 <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
                 <option value="tpl-11">11. Ciri Khas Sektor Bisnis (Spesial)</option>
                 <option value="tpl-12">12. Betel Box Hostel (Spesial SingTrade/Hotel)</option>
+                <option value="tpl-13">13. Swalayan (Spesial Sembako/Top100)</option>
             </select>
         </div>
 
@@ -504,7 +509,7 @@
         <div class="preview-wrapper">
             <div id="receipt" class="tpl-1">
                 <div class="receipt-content">
-                    <div class="not-tpl12">
+                    <div class="not-tpl12 not-tpl13">
                         <div class="logo-container">
                             <img id="prevLogo" src="" alt="Logo">
                         </div>
@@ -680,8 +685,57 @@
                             <div>DATE IN : <span id="prevDateIn12"></span></div>
                             <div>FINAL NIGHT : <span id="prevDateOut12"></span></div>
                         </div>
-
                     </div>
+
+                    <div class="tpl13-only section-tpl13-swalayan">
+                        <div class="text-center" style="margin-bottom: 8px;">
+                            <div id="prevName13" style="font-size: 1.15em; font-weight: bold;">TOP 100 PASAR SWALAYAN</div>
+                            <div id="prevAddress13" style="white-space: pre-line; font-size: 0.85em; margin-top: 2px;">BIZPARK BLOK B NO 10-17 BATAM CENTER</div>
+                        </div>
+                        
+                        <div class="divider-13"></div>
+                        <div class="flex-between" style="font-size: 0.8em;">
+                            <span>BILL# <span id="prevReceiptNo13">341549</span></span>
+                            <span id="prevTime13">12:34:41</span>
+                            <span id="prevDate13">06/06/2026</span>
+                        </div>
+                        <div class="divider-13"></div>
+                        
+                        <div id="prevItems13" style="font-size: 0.85em;"></div>
+                        
+                        <div class="divider-13"></div>
+                        <div class="flex-between" style="font-size: 0.9em; padding: 0 10px;">
+                            <span>Qty Count :</span>
+                            <span id="prevQtyNo13">40 Pcs</span>
+                        </div>
+                        <div class="divider-13"></div>
+                        
+                        <div style="font-size: 1.05em; padding: 5px 15px;">
+                            <div class="flex-between" style="margin-bottom: 4px;">
+                                <span>TOTAL</span>
+                                <span>Rp. <span id="prevTotal13" style="display:inline-block; width: 65px; text-align:right;">700.000</span></span>
+                            </div>
+                            <div class="flex-between">
+                                <span id="prevPayMethod13">DEBIT/C</span>
+                                <span>Rp. <span id="prevTotal13_small" style="display:inline-block; width: 65px; text-align:right;">700.000</span></span>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 0.85em; margin-top: 15px;">
+                            <div class="flex-between">
+                                <span>KASIR <span id="prevCashier13">7104</span></span>
+                                <span>M<span id="prevMachine13">7104</span> R<span id="prevReg13">0032</span></span>
+                            </div>
+                            <div class="divider-13"></div>
+                        </div>
+                        
+                        <div id="prevFooter13" class="text-center" style="font-size: 0.8em; margin-top: 8px; white-space: pre-line; line-height: 1.3;">
+                            MOHON PERIKSA KEMBALI JML&TGL KADALUARSA
+                            PRODUK YG DIBELI, JIKA TIDAK SESUAI/RAGU
+                            MOHON DIBERITAHUKAN..!
+                        </div>
+                    </div>
+
                 </div>
             </div>
             
@@ -718,7 +772,8 @@
                     "tpl-9": "STRUK LAYANAN MANDIRI\nSimpan Struk Bukti Ambil Menu.",
                     "tpl-10": "Makan Hemat & Nikmat.\nSuwun / Terima Kasih.",
                     "tpl-11": "Harga Sudah Termasuk PB1 (10%)\nSelamat Menikmati Hidangan Anda!",
-                    "tpl-12": ""
+                    "tpl-12": "",
+                    "tpl-13": "MOHON PERIKSA KEMBALI JML&TGL KADALUARSA\nPRODUK YG DIBELI, JIKA TIDAK SESUAI/RAGU\nMOHON DIBERITAHUKAN..!"
                 }
             },
             stationary: {
@@ -745,7 +800,8 @@
                     "tpl-9": "NOTA ATK DOTTED SYSTEM\nCustomer Copy",
                     "tpl-10": "Maturnuwun.\nBelanja Cerdas Hemat Kertas.",
                     "tpl-11": "Terima Kasih Telah Menjadi Member Setia!\nPoin Anda Otomatis Ditambahkan Di Database.",
-                    "tpl-12": ""
+                    "tpl-12": "",
+                    "tpl-13": "MOHON PERIKSA KEMBALI JML&TGL KADALUARSA\nPRODUK YG DIBELI, JIKA TIDAK SESUAI/RAGU\nMOHON DIBERITAHUKAN..!"
                 }
             },
             sembako: {
@@ -772,7 +828,8 @@
                     "tpl-9": "NOTA DISTRIBUSI TOKO\nCopy Pelanggan",
                     "tpl-10": "Matur Suwun.\nRezeki Lancar Barokah.",
                     "tpl-11": "Harga Khusus Pelanggan Grosir / Reseller.\nTerima Kasih Atas Kerja Samanya!",
-                    "tpl-12": ""
+                    "tpl-12": "",
+                    "tpl-13": "MOHON PERIKSA KEMBALI JML&TGL KADALUARSA\nPRODUK YG DIBELI, JIKA TIDAK SESUAI/RAGU\nMOHON DIBERITAHUKAN..!"
                 }
             },
             apotek: {
@@ -799,7 +856,8 @@
                     "tpl-9": "NOTA KHUSUS FARMASI\nLayanan 24 Jam Nonstop",
                     "tpl-10": "Sehat Selalu.\nMatur Nuwun.",
                     "tpl-11": "Semoga Lekas Sembuh & Sehat Kembali.\nTerima Kasih Atas Kepercayaan Anda.",
-                    "tpl-12": ""
+                    "tpl-12": "",
+                    "tpl-13": "MOHON PERIKSA KEMBALI JML&TGL KADALUARSA\nPRODUK YG DIBELI, JIKA TIDAK SESUAI/RAGU\nMOHON DIBERITAHUKAN..!"
                 }
             },
             singtrade: {
@@ -823,7 +881,8 @@
                     "tpl-9": "SINGTRADE AUDIO RECEIPT\nCustomer Copy",
                     "tpl-10": "Thank you.\nHave a great day.",
                     "tpl-11": "All products come with 1-Year Local Warranty.\nThank you for shopping at SingTrade!",
-                    "tpl-12": ""
+                    "tpl-12": "",
+                    "tpl-13": "MOHON PERIKSA KEMBALI JML&TGL KADALUARSA\nPRODUK YG DIBELI, JIKA TIDAK SESUAI/RAGU\nMOHON DIBERITAHUKAN..!"
                 }
             }
         };
@@ -1109,6 +1168,12 @@
             document.getElementById('prevName').innerText = currentTitle || 'NAMA TOKO';
             document.getElementById('prevAddress').innerHTML = currentAddress.replace(/\n/g, '<br>');
             document.getElementById('prevFooter').innerText = document.getElementById('footerMessage').value;
+            
+            // Render specific fields for TPL-13
+            document.getElementById('prevName13').innerText = currentTitle;
+            document.getElementById('prevAddress13').innerText = currentAddress.replace(/\n/g, ' ');
+            document.getElementById('prevReceiptNo13').innerText = currentReceiptNo.replace(/[^A-Za-z0-9]/g, '').substring(0, 6);
+            document.getElementById('prevFooter13').innerText = document.getElementById('footerMessage').value.toUpperCase();
 
             document.querySelectorAll('.cashierNameField').forEach(el => el.innerText = currentCashier);
             document.querySelectorAll('.prevReceiptNoField').forEach(el => el.innerText = currentReceiptNo);
@@ -1131,13 +1196,24 @@
                 document.getElementById('prevDate').innerText = formatStandard;
                 document.querySelectorAll('.prevDateIndo').forEach(el => el.innerText = formatTanggal(dateInput));
                 document.getElementById('prevDate12').innerText = formatTanggalDash(dateInput);
+                
+                const time13 = d.getHours().toString().padStart(2, '0') + ':' + 
+                               d.getMinutes().toString().padStart(2, '0') + ':' + 
+                               Math.floor(Math.random() * 60).toString().padStart(2, '0');
+                const date13 = d.getDate().toString().padStart(2, '0') + '/' + 
+                               (d.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                               d.getFullYear();
+                               
+                document.getElementById('prevTime13').innerText = time13;
+                document.getElementById('prevDate13').innerText = date13;
             }
 
             const itemRows = document.querySelectorAll('.item-row');
             let itemsHTML = '';
             let itemsHTML12 = ''; 
+            let itemsHTML13 = '';
             let total = 0;
-            let totalQty12 = 0;
+            let totalQty = 0;
 
             itemRows.forEach(row => {
                 const qty = parseInt(row.querySelector('.qty').value) || 0;
@@ -1152,9 +1228,24 @@
 
                 if (qty > 0 && name.trim() !== '') {
                     total += subtotal;
-                    totalQty12 += qty;
+                    totalQty += qty;
                     
-                    if(template === 'tpl-12') {
+                    if(template === 'tpl-13') {
+                        const pseudoBarcode = "899" + Math.floor(1000000000 + Math.random() * 9000000000);
+                        itemsHTML13 += `
+                            <div style="margin-bottom: 8px;">
+                                <div class="flex-between">
+                                    <span style="flex:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 5px;">${name}</span>
+                                    <span>@ ${formatCurrency(price)}</span>
+                                </div>
+                                <div class="flex-between">
+                                    <span>${pseudoBarcode}</span>
+                                    <span>x ${qty} =</span>
+                                    <span>${formatCurrency(subtotal)}</span>
+                                </div>
+                            </div>
+                        `;
+                    } else if(template === 'tpl-12') {
                         itemsHTML12 += `
                             <div style="margin-bottom: 8px;">
                                 <div>${name}</div>
@@ -1190,15 +1281,30 @@
 
             document.getElementById('prevItems').innerHTML = itemsHTML;
             document.getElementById('prevItems12').innerHTML = itemsHTML12;
+            document.getElementById('prevItems13').innerHTML = itemsHTML13;
             
             document.getElementById('uiGrandTotal').innerText = currencySymbol + formatCurrency(total);
 
             document.querySelectorAll('.prevTotalField').forEach(el => el.innerText = currencySymbol + formatCurrency(total));
             document.querySelector('.prevSubtotalValue').innerText = formatCurrency(total);
             
-            document.getElementById('prevQtyNo12').innerText = totalQty12 + " NO";
+            document.getElementById('prevQtyNo12').innerText = totalQty + " NO";
             document.getElementById('prevTotal12_large').innerText = "$" + formatCurrency(total);
             document.getElementById('prevTotal12_small').innerText = "$" + formatCurrency(total);
+            
+            document.getElementById('prevQtyNo13').innerText = totalQty + " Pcs";
+            document.getElementById('prevTotal13').innerText = formatCurrency(total);
+            document.getElementById('prevTotal13_small').innerText = formatCurrency(total);
+            
+            let displayPayMethod = currentPayMethod.toUpperCase();
+            if(displayPayMethod.includes('CASH') || displayPayMethod.includes('KERAS')) displayPayMethod = 'CASH';
+            else if(displayPayMethod.includes('DEBIT') || displayPayMethod.includes('TRANSFER')) displayPayMethod = 'DEBIT/C';
+            else displayPayMethod = displayPayMethod.substring(0, 8);
+            
+            document.getElementById('prevPayMethod13').innerText = displayPayMethod;
+            document.getElementById('prevCashier13').innerText = currentCashier.toUpperCase().substring(0, 8);
+            document.getElementById('prevMachine13').innerText = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('prevReg13').innerText = Math.floor(10 + Math.random() * 90).toString().padStart(4, '0');
         }
 
         window.onload = function() {
