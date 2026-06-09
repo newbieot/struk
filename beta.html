@@ -3,66 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BETA - Generator Struk Thermal</title>
+    <title>POS Thermal Engine Sandbox | PosNew Hub</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* === TAMPILAN UI WEBSITE (TIDAK TERCETAK) === */
-        :root { 
-            --primary: #008CBA; 
-            --bg: #f4f4f9; 
-            --text: #333; 
-            --tab-resto: #e74c3c;
-            --tab-stat: #2980b9;
-            --tab-apotek: #27ae60;
-            --tab-singtrade: #8e44ad;
+        /* === POSNEW.COM THEME VARIABLES === */
+        :root {
+            --pos-orange: #FF5722; 
+            --pos-orange-glow: rgba(255, 87, 34, 0.15);
+            --pos-orange-hover: rgba(255, 87, 34, 0.25);
+            --bg-dark: #090e17;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success-green: #10b981;
+            --danger-red: #ef4444;
         }
+
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex: 1 1 450px; max-width: 650px; }
-        h2 { margin-top: 0; font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* Banner Beta */
-        .beta-banner { background: #ffeaa7; color: #d35400; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-weight: bold; border: 1px dashed #f39c12; font-size: 0.95rem; }
-        .beta-banner a { color: #c0392b; text-decoration: underline; cursor: pointer; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 30px 15px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 25px; 
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 87, 34, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(30, 58, 138, 0.15), transparent 25%),
+                radial-gradient(circle at top right, #111827, #090e17);
+            background-attachment: fixed;
+        }
 
-        /* Navigasi Tab */
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: #eee; padding: 5px; border-radius: 8px; flex-wrap: wrap; }
-        .tab-btn { flex: 1; padding: 10px 5px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; opacity: 0.6; font-size: 0.85rem; min-width: 100px;}
-        .tab-btn.active { opacity: 1; transform: scale(1.02); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .tab-resto { background-color: var(--tab-resto); }
-        .tab-stat { background-color: var(--tab-stat); }
-        .tab-apotek { background-color: var(--tab-apotek); }
-        .tab-singtrade { background-color: var(--tab-singtrade); }
+        /* Glassmorphism Panel */
+        .panel { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
+            flex: 1 1 450px; 
+            max-width: 650px; 
+        }
 
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: #555; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.9rem; }
-        textarea { resize: vertical; height: 55px; }
-        input[type="file"] { padding: 5px; }
-        input[type="range"] { padding: 0; height: 10px; }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .header-brand h2 { 
+            margin: 0; 
+            font-size: 1.3rem; 
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge-sandbox {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Disclaimer Alert */
+        .disclaimer-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger-red);
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: #fca5a5;
+            line-height: 1.5;
+        }
+
+        .disclaimer-alert strong { color: #fecaca; }
+
+        /* Navigasi Tab Modern */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { 
+            flex: 1; padding: 10px 5px; 
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--card-border); 
+            border-radius: 8px; cursor: pointer; 
+            font-weight: 600; color: var(--text-dim); 
+            transition: all 0.3s; font-size: 0.8rem; min-width: 90px;
+        }
+        .tab-btn:hover { background: rgba(255,255,255,0.08); color: white; }
+        .tab-btn.active { 
+            background: var(--pos-orange-glow); 
+            border-color: var(--pos-orange);
+            color: var(--pos-orange);
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.1); 
+        }
+
+        /* Forms */
+        .form-group { margin-bottom: 15px; }
+        label { display: flex; align-items: center; gap: 6px; font-weight: 500; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); }
         
-        .btn { padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-primary { background-color: var(--primary); color: white; }
-        .btn-primary:hover { background-color: #007399; }
-        .btn-danger { background-color: #ff4757; color: white; padding: 10px; }
-        .btn-danger:hover { background-color: #ff6b81; }
-        .btn-print { background-color: #2ed573; color: white; width: 100%; font-size: 1.1rem; margin-top: 15px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn-print:hover { background-color: #26b361; }
+        input, select, textarea { 
+            width: 100%; padding: 10px 12px; 
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--card-border); 
+            border-radius: 8px; color: white;
+            font-family: inherit; font-size: 0.9rem; 
+            transition: all 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--pos-orange);
+            box-shadow: 0 0 0 3px var(--pos-orange-glow);
+        }
+        textarea { resize: vertical; height: 60px; }
+        
+        /* Kalibrasi Box */
+        .calibration-box {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 15px; border-radius: 10px; border: 1px solid var(--card-border);
+        }
+        .slider-row { margin-top: 10px; }
+        .slider-val { font-size: 0.8rem; color: var(--pos-orange); font-weight: 600; float: right; }
+        input[type="range"] { 
+            -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); 
+            border-radius: 2px; outline: none; margin-top: 8px; padding: 0; border: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+            background: var(--pos-orange); cursor: pointer; transition: 0.2s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
-        .item-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; background: #fafafa; padding: 8px; border-radius: 6px; border: 1px solid #eee; }
+        /* Buttons */
+        .btn { padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
+        .btn-primary { background-color: rgba(255,255,255,0.1); color: white; border: 1px solid var(--card-border); }
+        .btn-primary:hover { background-color: var(--pos-orange); border-color: var(--pos-orange); color: white; }
+        .btn-danger { background-color: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 10px; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .btn-danger:hover { background-color: var(--danger-red); color: white; }
+        .btn-print { 
+            background: linear-gradient(135deg, var(--pos-orange), #d84315); 
+            color: white; width: 100%; font-size: 1.1rem; margin-top: 20px; padding: 15px; 
+            box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2); 
+        }
+        .btn-print:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(255, 87, 34, 0.3); }
+
+        /* Item Rows */
+        .item-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; border: 1px solid var(--card-border); }
         .item-row input.qty { flex: 0.15; min-width: 50px; text-align: center;}
         .item-row input.name { flex: 0.8; }
         .item-row input.price { flex: 0.3; min-width: 80px; }
-        .item-row input.item-total { flex: 0.3; min-width: 90px; background-color: #e9ecef; font-weight: bold; color: #444; cursor: not-allowed; border: 1px solid #ccc; }
+        .item-row input.item-total { flex: 0.3; min-width: 90px; background-color: rgba(255,255,255,0.02); font-weight: 600; color: var(--text-dim); cursor: not-allowed; }
 
-        .slider-val { font-size: 0.8rem; color: #888; font-weight: normal; float: right; }
         .category-fields { display: none; }
-        .category-fields.active { display: block; }
+        .category-fields.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* === AREA PREVIEW STRUK DI LAYAR === */
-        .preview-wrapper { background: #2f3542; padding: 20px; border-radius: 12px; display: flex; justify-content: center; width: 100%; }
+        .preview-wrapper { 
+            background: #0f172a; padding: 30px 20px; border-radius: 12px; 
+            display: flex; justify-content: center; width: 100%; 
+            border: 1px solid var(--card-border);
+            box-shadow: inset 0 5px 20px rgba(0,0,0,0.5);
+        }
         
         /* === BASE CSS UNTUK KERTAS THERMAL === */
-        #receipt { background: white; color: #000; overflow: hidden; word-wrap: break-word; line-height: 1.2; }
+        #receipt { 
+            background: white; color: #000; overflow: hidden; word-wrap: break-word; line-height: 1.2; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative;
+        }
+
+        /* WATERMARK KEAMANAN - MUTLAK ADA */
+        #receipt::before {
+            content: 'SIMULATION ONLY';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 2em;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.08);
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 0;
+            font-family: Arial, sans-serif;
+            letter-spacing: 5px;
+        }
+        
+        .receipt-content { position: relative; z-index: 1; }
+
         .logo-container { text-align: center; margin-bottom: 5px; }
         .logo-container img { max-width: 65%; height: auto; display: none; filter: grayscale(100%) contrast(1.4); }
         .flex-between { display: flex; justify-content: space-between; gap: 4px; width: 100%; }
@@ -76,7 +220,7 @@
         .tpl-12 .not-tpl12 { display: none !important; }
 
         /* === 12 MODALITAS TEMPLATE UTAMA === */
-        .tpl-1 { font-family: 'Courier New', Courier, monospace; }
+        .tpl-1 { font-family: 'Courier Prime', 'Courier New', Courier, monospace; }
         .tpl-1 .divider { border-bottom: 1px dashed #000; margin: 5px 0; }
         .tpl-1 h3 { text-align: center; font-size: 1.3em; margin: 0 0 4px 0; text-transform: uppercase; }
         .tpl-1 .head-info { text-align: center; }
@@ -126,7 +270,7 @@
         .tpl-8 .logo-container { text-align: right; }
         .tpl-8 .total-line { font-weight: bold; border-top: 1px solid #000; margin-top: 4px; padding-top: 4px; }
 
-        .tpl-9 { font-family: 'Courier New', Courier, monospace; }
+        .tpl-9 { font-family: 'Courier Prime', Courier, monospace; }
         .tpl-9 .divider { border-bottom: 2px dotted #000; margin: 6px 0; }
         .tpl-9 h3 { text-align: center; font-size: 1.1em; margin: 0; background: #000; color: #fff; padding: 2px; }
         .tpl-9 .head-info { text-align: center; margin-top: 4px; }
@@ -143,7 +287,7 @@
         .tpl-11 .head-info { text-align: center; }
         .tpl-11 .head-info h3 { font-size: 1.3em; margin: 0 0 3px 0; font-weight: bold; text-align: center; }
         .tpl-11 .divider-11 { border-bottom: 1px dashed #000; margin: 6px 0; }
-        .tpl-12 { font-family: 'Courier New', Courier, monospace; letter-spacing: 0.5px; }
+        .tpl-12 { font-family: 'Courier Prime', Courier, monospace; letter-spacing: 0.5px; }
 
         /* === ATURAN KRUSIAL PRINT === */
         @media print {
@@ -152,10 +296,15 @@
                 margin: 0 !important; padding: 0 !important; background: #fff !important; 
                 width: 58mm !important; max-height: 100% !important; overflow: hidden !important; display: block !important;
             }
-            .panel:not(#print-panel), .btn-print, .no-print, .tabs, .beta-banner { display: none !important; }
-            #print-panel { margin: 0 !important; padding: 0 !important; width: 58mm !important; box-shadow: none !important; background: transparent !important; display: block !important; }
-            .preview-wrapper { display: block !important; padding: 0 !important; margin: 0 !important; background: transparent !important; }
+            .panel:not(#print-panel), .btn-print, .no-print, .tabs { display: none !important; }
+            #print-panel { margin: 0 !important; padding: 0 !important; width: 58mm !important; box-shadow: none !important; background: transparent !important; display: block !important; border: none !important;}
+            .preview-wrapper { display: block !important; padding: 0 !important; margin: 0 !important; background: transparent !important; box-shadow: none !important; border: none !important;}
             #receipt { box-shadow: none !important; display: block !important; }
+            #receipt::before {
+                color: rgba(0, 0, 0, 0.15) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
@@ -163,22 +312,28 @@
 
     <div class="panel">
         
-        <div class="beta-banner no-print">
-            🚀 Anda sedang menggunakan Versi BETA. 
-            <a href="index.html">Kembali ke Versi Stable</a>
+        <div class="header-brand">
+            <i data-lucide="printer" style="color: var(--pos-orange); width: 28px; height: 28px;"></i>
+            <h2>POS Thermal CSS Engine</h2>
+            <span class="badge-sandbox">SANDBOX</span>
         </div>
 
-        <h2>KASIR STRUK THERMAL</h2>
+        <div class="disclaimer-alert">
+            <strong><i data-lucide="shield-alert" style="width: 14px; height: 14px; display: inline-block; margin-bottom: -2px;"></i> Portfolio Disclaimer:</strong><br>
+            Modul ini dibangun murni untuk mendemonstrasikan manipulasi <em>CSS Print Media</em>, integrasi grid dinamis, dan rendering antarmuka Point of Sales (POS). Output dokumen dilindungi <em>watermark</em> dan tidak valid untuk transaksi nyata.
+        </div>
         
         <div class="tabs">
-            <button class="tab-btn tab-resto active" onclick="switchTab('restaurant')">Restaurant</button>
-            <button class="tab-btn tab-stat" onclick="switchTab('stationary')">Stationary</button>
-            <button class="tab-btn tab-apotek" onclick="switchTab('apotek')">Apotek</button>
-            <button class="tab-btn tab-singtrade" onclick="switchTab('singtrade')">SingTrade / Hotel</button>
+            <button class="tab-btn active" onclick="switchTab('restaurant')">Restaurant UI</button>
+            <button class="tab-btn" onclick="switchTab('stationary')">Retail / Stat.</button>
+            <button class="tab-btn" onclick="switchTab('apotek')">Pharmacy</button>
+            <button class="tab-btn" onclick="switchTab('singtrade')">Hotel / Trade</button>
+            <!-- TAB BARU UNTUK SEMBAKO -->
+            <button class="tab-btn" onclick="switchTab('sembako')">Grosir / Sembako</button>
         </div>
         
         <div class="form-group">
-            <label>Pilih Desain Struk (1-12)</label>
+            <label><i data-lucide="layout-template" style="width: 16px; height: 16px;"></i> Layout Template Render</label>
             <select id="templateSelect" onchange="handleTemplateChange()">
                 <option value="tpl-1">1. Klasik (Dashed, Center)</option>
                 <option value="tpl-2">2. Modern (Solid, Sans-serif)</option>
@@ -191,80 +346,98 @@
                 <option value="tpl-9">9. Tiket Perjamuan / Nota Dotted</option>
                 <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
                 <option value="tpl-11">11. Ciri Khas Sektor Bisnis (Spesial)</option>
-                <option value="tpl-12" selected>12. Betel Box Hostel (Spesial SingTrade/Hotel)</option>
+                <option value="tpl-12">12. Betel Box Hostel (Spesial SingTrade/Hotel)</option>
             </select>
         </div>
 
-        <div class="form-group" style="background: #eef7fa; padding: 10px; border-radius: 6px; border: 1px solid #bce1ec;">
-            <label style="color: #007399;">🛠️ Kalibrasi Tampilan Struk</label>
+        <div class="form-group calibration-box">
+            <label style="color: var(--pos-orange); font-size: 0.95rem;"><i data-lucide="sliders-horizontal" style="width: 18px; height: 18px;"></i> Thermal Calibration Matrix</label>
             
-            <div style="margin-top: 8px;">
-                <label style="font-weight: normal;">Margin Kiri <span id="valMargin" class="slider-val">0 mm</span></label>
+            <div class="slider-row">
+                <label>Left Margin Offset <span id="valMargin" class="slider-val">0 mm</span></label>
                 <input type="range" id="inputMarginLeft" min="0" max="15" value="0" oninput="updatePreview()">
             </div>
             
-            <div style="margin-top: 8px;">
-                <label style="font-weight: normal;">Lebar Konten Struk <span id="valWidth" class="slider-val">58 mm</span></label>
-                <input type="range" id="inputWidth" min="40" max="58" value="58" oninput="updatePreview()">
+            <div class="slider-row">
+                <label>Paper Width Scope <span id="valWidth" class="slider-val">48 mm</span></label>
+                <input type="range" id="inputWidth" min="40" max="58" value="48" oninput="updatePreview()">
             </div>
 
-            <div style="margin-top: 8px; border-top: 1px dashed #bce1ec; padding-top: 8px;">
-                <label style="font-weight: normal;">Spasi Teks ke Tepi (Padding) <span id="valPadding" class="slider-val">0 mm</span></label>
+            <div class="slider-row" style="border-top: 1px dashed var(--card-border); padding-top: 10px; margin-top: 10px;">
+                <label>Edge Padding <span id="valPadding" class="slider-val">0 mm</span></label>
                 <input type="range" id="inputPadding" min="0" max="10" value="0" oninput="updatePreview()">
-                <small style="color:#777; font-size:10px;">*Geser ke 0 mm agar teks memanfaatkan lebar kertas secara penuh.</small>
             </div>
 
-            <div style="margin-top: 8px;">
-                <label style="font-weight: normal;">Ukuran Huruf/Font <span id="valFontSize" class="slider-val">11 px</span></label>
+            <div class="slider-row">
+                <label>Font Scale Override <span id="valFontSize" class="slider-val">11 px</span></label>
                 <input type="range" id="inputFontSize" min="9" max="16" value="11" oninput="updatePreview()">
             </div>
         </div>
 
         <div class="form-group">
-            <label>Upload Logo Bisnis (Opsional)</label>
+            <label><i data-lucide="image" style="width: 16px; height: 16px;"></i> Brand Logo Upload (B&W Filter Applied)</label>
             <input type="file" id="logoInput" accept="image/*">
         </div>
 
         <div id="fields-restaurant" class="category-fields active">
             <div class="form-group">
-                <label>Nama Restaurant</label>
+                <label>Restaurant Name</label>
                 <input type="text" id="restoName" value="One Food Street" oninput="updatePreview()">
             </div>
             <div class="form-group">
-                <label>Alamat / Kontak</label>
+                <label>Address / Contact Info</label>
                 <input type="text" id="restoAddress" value="One Batam Mall&#10;Batam Kota, Kepulauan Riau" oninput="updatePreview()">
             </div>
         </div>
 
         <div id="fields-stationary" class="category-fields">
             <div class="form-group">
-                <label>Nama Toko Stationary</label>
+                <label>Retail Store Name</label>
                 <input type="text" id="statName" value="ATK JAYA STATIONERY" oninput="updatePreview()">
             </div>
             <div class="form-group">
-                <label>Alamat / Kontak</label>
+                <label>Address / Contact Info</label>
                 <input type="text" id="statAddress" value="Ruko Mega Legenda Blok B No. 5&#10;Batam Center - Telp: 0778-456789" oninput="updatePreview()">
+            </div>
+        </div>
+
+        <!-- FORM BARU UNTUK SEMBAKO -->
+        <div id="fields-sembako" class="category-fields">
+            <div class="form-group">
+                <label>Nama Toko Grosir/Sembako</label>
+                <input type="text" id="sembakoName" value="TOKO GROSIR BERKAH" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label>Alamat / Kontak</label>
+                <input type="text" id="sembakoAddress" value="Pasar Induk Jodoh Blok A No. 12&#10;Batam - Telp/WA: 0812-3456-7890" oninput="updatePreview()">
+            </div>
+            <div class="form-group" style="background: rgba(59, 130, 246, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                <label style="color: #3b82f6; margin-bottom: 10px;"><i data-lucide="truck" style="width: 16px; height: 16px;"></i> Detail Pengiriman / Pelanggan</label>
+                <div style="margin-top: 5px;">
+                    <label style="font-size: 0.8rem;">Nama Pelanggan / Warung Tujuan</label>
+                    <input type="text" id="sembakoCustomer" value="Warung Bu Tejo" oninput="updatePreview()" style="padding: 8px;">
+                </div>
             </div>
         </div>
 
         <div id="fields-apotek" class="category-fields">
             <div class="form-group">
-                <label>Nama Apotek</label>
+                <label>Pharmacy Name</label>
                 <input type="text" id="apotekName" value="APOTEK SEHAT MANDIRI" oninput="updatePreview()">
             </div>
             <div class="form-group">
-                <label>Alamat & Perizinan</label>
+                <label>Licensing & Address</label>
                 <input type="text" id="apotekAddress" value="Jl. Jend. Sudirman No. 42 Batam&#10;SIA: 442/0192/SIA-BTM/2026" oninput="updatePreview()">
             </div>
-            <div class="form-group" style="background: #eefaf2; padding: 8px; border-radius: 6px; border: 1px solid #ccebd5;">
-                <label style="color: #27ae60;">💊 Atribut Tambahan Farmasi</label>
+            <div class="form-group" style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                <label style="color: var(--success-green); margin-bottom: 10px;"><i data-lucide="pill" style="width: 16px; height: 16px;"></i> Medical Attributes</label>
                 <div style="margin-top: 5px;">
-                    <label style="font-weight: normal; font-size: 0.85rem;">Nama Dokter</label>
-                    <input type="text" id="apotekDokter" value="Dr. Hendrawan Sp.A" oninput="updatePreview()" style="padding: 6px;">
+                    <label style="font-size: 0.8rem;">Physician Name</label>
+                    <input type="text" id="apotekDokter" value="Dr. Hendrawan Sp.A" oninput="updatePreview()" style="padding: 8px;">
                 </div>
-                <div style="margin-top: 5px;">
-                    <label style="font-weight: normal; font-size: 0.85rem;">Nama Pasien</label>
-                    <input type="text" id="apotekPasien" value="Tn. Rahmat Dani (Umum)" oninput="updatePreview()" style="padding: 6px;">
+                <div style="margin-top: 10px;">
+                    <label style="font-size: 0.8rem;">Patient Name</label>
+                    <input type="text" id="apotekPasien" value="Tn. Rahmat Dani (Umum)" oninput="updatePreview()" style="padding: 8px;">
                 </div>
             </div>
         </div>
@@ -275,229 +448,250 @@
                 <input type="text" id="singName" value="SingTrade Marketing & Services PTE LTD" oninput="updatePreview()">
             </div>
             <div class="form-group">
-                <label>Address & Details</label>
+                <label>Registration & Address</label>
                 <input type="text" id="singAddress" value="1 Rochor Canal Rd, #02-12&#10;Sim Lim Square, Singapore 188504&#10;GST Reg No: 201234567Z" oninput="updatePreview()">
             </div>
-            <div class="form-group" style="background: #fdf2e9; padding: 8px; border-radius: 6px; border: 1px solid #fae5d3;">
-                <label style="color: #d35400;">🏨 Hotel / Customer Details</label>
+            <div class="form-group" style="background: rgba(245, 158, 11, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                <label style="color: #f59e0b; margin-bottom: 10px;"><i data-lucide="bed-double" style="width: 16px; height: 16px;"></i> Hospitality Details</label>
                 <div style="margin-top: 5px;">
-                    <label style="font-weight: normal; font-size: 0.85rem;">Guest / Customer Name</label>
-                    <input type="text" id="singCustomer" value="Indah Mayang" oninput="updatePreview()" style="padding: 6px;">
+                    <label style="font-size: 0.8rem;">Guest Name</label>
+                    <input type="text" id="singCustomer" value="Indah Mayang" oninput="updatePreview()" style="padding: 8px;">
                 </div>
-                <div style="margin-top: 5px;">
-                    <label style="font-weight: normal; font-size: 0.85rem;">Date In (Format bebas, misal 30/10/25)</label>
-                    <input type="text" id="hotelDateIn" value="30/10/25" oninput="updatePreview()" style="padding: 6px;">
+                <div style="margin-top: 10px;">
+                    <label style="font-size: 0.8rem;">Check-in Date (String)</label>
+                    <input type="text" id="hotelDateIn" value="30/10/25" oninput="updatePreview()" style="padding: 8px;">
                 </div>
-                <div style="margin-top: 5px;">
-                    <label style="font-weight: normal; font-size: 0.85rem;">Final Night (Format bebas)</label>
-                    <input type="text" id="hotelDateOut" value="" oninput="updatePreview()" style="padding: 6px;">
+                <div style="margin-top: 10px;">
+                    <label style="font-size: 0.8rem;">Final Night (String)</label>
+                    <input type="text" id="hotelDateOut" value="" oninput="updatePreview()" style="padding: 8px;">
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label>Tanggal & Waktu Transaksi</label>
+            <label><i data-lucide="calendar-clock" style="width: 16px; height: 16px;"></i> Transaction Timestamp</label>
             <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
         </div>
 
         <div class="form-group">
-            <label>Pesan Kustom Bawah Struk / Footer</label>
+            <label><i data-lucide="message-square-text" style="width: 16px; height: 16px;"></i> Custom Footer Note</label>
             <textarea id="footerMessage" oninput="updatePreview()"></textarea>
         </div>
 
-        <h2 style="margin-top: 20px;">
-            DAFTAR BARANG/MENU/KAMAR
-            <button class="btn btn-primary" onclick="addItem()" style="font-size: 11px; padding: 5px 10px;">+ Tambah</button>
-        </h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-top: 25px; margin-bottom: 15px;">
+            <h2 style="margin:0; font-size: 1rem; border:none; padding:0; color: white;"><i data-lucide="shopping-cart" style="width: 18px; height: 18px; display:inline-block; margin-bottom:-3px;"></i> CART ITEMS</h2>
+            <button class="btn btn-primary" onclick="addItem()" style="font-size: 11px; padding: 6px 12px;"><i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add Row</button>
+        </div>
         
         <div id="itemsContainer"></div>
 
-        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 2px dashed #ccc;">
-            <span style="font-size: 1.1rem; font-weight: bold; margin-right: 15px;">TOTAL KESELURUHAN:</span>
-            <span id="uiGrandTotal" style="font-size: 1.3rem; font-weight: 900; color: var(--primary);">Rp 0</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--card-border);">
+            <span style="font-size: 1rem; font-weight: 500; color: var(--text-dim);">CALCULATED TOTAL:</span>
+            <span id="uiGrandTotal" style="font-size: 1.4rem; font-weight: 800; color: var(--pos-orange);">Rp 0</span>
         </div>
 
-        <button class="btn btn-print" onclick="window.print()">🖨️ CETAK STRUK SEKARANG</button>
+        <button class="btn btn-print" onclick="window.print()"><i data-lucide="printer" style="width: 20px; height: 20px;"></i> RENDER PRINT MEDIA</button>
     </div>
 
+    <!-- PREVIEW PANEL -->
     <div class="panel" id="print-panel">
-        <h2 class="no-print" style="text-align: center; color: #555;">LIVE PREVIEW THERMAL</h2>
+        <div class="header-brand no-print" style="justify-content: center;">
+            <h2 style="font-size: 1.1rem; color: var(--text-dim); background: none; -webkit-text-fill-color: initial;"><i data-lucide="monitor-smartphone" style="width: 18px; height: 18px; display:inline-block; margin-bottom:-4px; color: var(--text-dim);"></i> VIRTUAL PAPER PREVIEW</h2>
+        </div>
+        
         <div class="preview-wrapper">
-            
-            <div id="receipt" class="tpl-12">
-                
-                <div class="not-tpl12">
-                    <div class="logo-container">
-                        <img id="prevLogo" src="" alt="Logo">
-                    </div>
+            <div id="receipt" class="tpl-1">
+                <div class="receipt-content">
+                    <div class="not-tpl12">
+                        <div class="logo-container">
+                            <img id="prevLogo" src="" alt="Logo">
+                        </div>
 
-                    <div class="head-info" style="margin-bottom: 12px;">
-                        <h3 id="prevName">One Food Street</h3>
-                        <div id="prevAddress" style="white-space: pre-line;">One Batam Mall<br>Batam Kota, Kepulauan Riau</div>
-                    </div>
-                    
-                    <div class="divider not-tpl11"></div>
-                    <div class="not-tpl11" style="margin-bottom: 5px; font-size: 0.95em;">
-                        <div class="flex-between">
-                            <span>No: <span id="prevReceiptNoGen">#A1F726052900</span></span>
-                            <span>Kasir: <span class="cashierNameField">Admin</span></span>
+                        <div class="head-info" style="margin-bottom: 12px;">
+                            <h3 id="prevName">One Food Street</h3>
+                            <div id="prevAddress" style="white-space: pre-line;">One Batam Mall<br>Batam Kota, Kepulauan Riau</div>
                         </div>
-                        <div id="prevDate">29/05/2026 13:37</div>
-                    </div>
-                    
-                    <div class="not-tpl11 apotek-meta-block" style="margin-bottom: 5px; font-size: 0.9em; border-top: 1px dashed #000; padding-top: 4px; display:none;">
-                        <div>Dokter : <span id="prevApoDokter">Dr. Hendrawan Sp.A</span></div>
-                        <div>Pasien : <span id="prevApoPasien">Tn. Rahmat Dani</span></div>
-                    </div>
-                    <div class="divider not-tpl11"></div>
+                        
+                        <div class="divider not-tpl11"></div>
+                        <div class="not-tpl11" style="margin-bottom: 5px; font-size: 0.95em;">
+                            <div class="flex-between">
+                                <span>No: <span id="prevReceiptNoGen">#A1F726052900</span></span>
+                                <span>Kasir: <span class="cashierNameField">Admin</span></span>
+                            </div>
+                            <div id="prevDate">29/05/2026 13:37</div>
+                            <!-- Khusus Sembako Non Tpl-11 -->
+                            <div class="sembako-meta-block" style="margin-top: 2px; display:none;">
+                                Cust: <span id="prevSembakoCust">Warung Bu Tejo</span>
+                            </div>
+                        </div>
+                        
+                        <div class="not-tpl11 apotek-meta-block" style="margin-bottom: 5px; font-size: 0.9em; border-top: 1px dashed #000; padding-top: 4px; display:none;">
+                            <div>Dokter : <span id="prevApoDokter">Dr. Hendrawan Sp.A</span></div>
+                            <div>Pasien : <span id="prevApoPasien">Tn. Rahmat Dani</span></div>
+                        </div>
+                        <div class="divider not-tpl11"></div>
 
-                    <div class="tpl11-only section-tpl11-restaurant" style="margin-bottom: 5px;">
-                        <div class="flex-between">
-                            <span>Waktu Penjualan</span>
-                            <span>Kasir</span>
+                        <div class="tpl11-only section-tpl11-restaurant" style="margin-bottom: 5px;">
+                            <div class="flex-between">
+                                <span>Waktu Penjualan</span>
+                                <span>Kasir</span>
+                            </div>
+                            <div class="flex-between" style="margin-bottom: 2px;">
+                                <span class="prevDateIndo">29 Mei 2026 13:37</span>
+                                <span class="cashierNameField" style="font-weight: bold;">Lika</span>
+                            </div>
+                            <div class="flex-between">
+                                <span class="prevReceiptNoField" style="font-weight: bold;">#A1FXNJLGPYS41</span>
+                                <span>1 Tamu</span>
+                            </div>
+                            <div class="divider-11"></div>
+                            <div class="text-center" style="font-weight: bold; margin: 4px 0;">DINE-IN (84)</div>
                         </div>
-                        <div class="flex-between" style="margin-bottom: 2px;">
-                            <span class="prevDateIndo">29 Mei 2026 13:37</span>
-                            <span class="cashierNameField" style="font-weight: bold;">Lika</span>
-                        </div>
-                        <div class="flex-between">
-                            <span class="prevReceiptNoField" style="font-weight: bold;">#A1FXNJLGPYS41</span>
-                            <span>1 Tamu</span>
-                        </div>
-                        <div class="divider-11"></div>
-                        <div class="text-center" style="font-weight: bold; margin: 4px 0;">DINE-IN (84)</div>
-                    </div>
 
-                    <div class="tpl11-only section-tpl11-stationary" style="margin-bottom: 5px;">
-                        <div class="flex-between">
-                            <span>Faktur No: <span class="prevReceiptNoField">#A1FXNJLGPYS41</span></span>
-                            <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                        <div class="tpl11-only section-tpl11-stationary" style="margin-bottom: 5px;">
+                            <div class="flex-between">
+                                <span>Faktur No: <span class="prevReceiptNoField">#A1FXNJLGPYS41</span></span>
+                                <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                            </div>
+                            <div class="flex-between">
+                                <span>Tanggal : <span class="prevDateIndo">29 Mei 2026</span></span>
+                                <span style="font-weight: bold; color: #000;">RETAIL</span>
+                            </div>
+                            <div class="divider-11"></div>
                         </div>
-                        <div class="flex-between">
-                            <span>Tanggal : <span class="prevDateIndo">29 Mei 2026</span></span>
-                            <span style="font-weight: bold; color: #000;">RETAIL</span>
-                        </div>
-                        <div class="divider-11"></div>
-                    </div>
 
-                    <div class="tpl11-only section-tpl11-apotek" style="margin-bottom: 5px;">
-                        <div class="flex-between">
-                            <span>Tgl/Jam : <span class="prevDateIndo">29 Mei 2026</span></span>
-                            <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                        <div class="tpl11-only section-tpl11-sembako" style="margin-bottom: 5px;">
+                            <div class="flex-between">
+                                <span>Faktur : <span class="prevReceiptNoField"></span></span>
+                                <span>Tgl: <span class="prevDateIndo"></span></span>
+                            </div>
+                            <div class="flex-between">
+                                <span>Pelanggan: <span id="prevSembakoCust11" style="font-weight:bold;"></span></span>
+                                <span>Op: <span class="cashierNameField"></span></span>
+                            </div>
+                            <div class="divider-11"></div>
                         </div>
-                        <div style="border-top: 1px dotted #000; margin: 4px 0; padding-top: 4px;">
-                            <div>Dokter : <span id="prevApoDokter11">Dr. Hendrawan Sp.A</span></div>
-                            <div>Pasien : <span id="prevApoPasien11">Tn. Rahmat Dani</span></div>
-                            <div>No. Resep: <span id="prevApoResep11">R-99212</span></div>
-                        </div>
-                        <div class="divider-11"></div>
-                    </div>
 
-                    <div class="tpl11-only section-tpl11-singtrade" style="margin-bottom: 5px;">
-                        <div class="text-center" style="font-weight: bold; font-size: 1.1em; margin-bottom: 6px;">TAX INVOICE</div>
-                        <div class="flex-between">
-                            <span>Inv No: <span class="prevReceiptNoField"></span></span>
-                            <span>Date: <span class="prevDateIndo"></span></span>
+                        <div class="tpl11-only section-tpl11-apotek" style="margin-bottom: 5px;">
+                            <div class="flex-between">
+                                <span>Tgl/Jam : <span class="prevDateIndo">29 Mei 2026</span></span>
+                                <span>Kasir: <span class="cashierNameField">Lika</span></span>
+                            </div>
+                            <div style="border-top: 1px dotted #000; margin: 4px 0; padding-top: 4px;">
+                                <div>Dokter : <span id="prevApoDokter11">Dr. Hendrawan Sp.A</span></div>
+                                <div>Pasien : <span id="prevApoPasien11">Tn. Rahmat Dani</span></div>
+                                <div>No. Resep: <span id="prevApoResep11">R-99212</span></div>
+                            </div>
+                            <div class="divider-11"></div>
                         </div>
-                        <div class="flex-between" style="margin-bottom: 4px;">
-                            <span>Sales: <span class="cashierNameField"></span></span>
-                            <span>Cust: <span id="prevSingCust"></span></span>
-                        </div>
-                        <div class="divider-11"></div>
-                    </div>
 
-                    <div id="prevItems"></div>
-                    
-                    <div class="divider not-tpl11"></div>
-                    <div class="flex-between total-line not-tpl11">
-                        <span>TOTAL</span>
-                        <span class="prevTotalField">Rp 0</span>
-                    </div>
-                    <div class="divider not-tpl11" style="margin-top:10px;"></div>
-                    
-                    <div class="divider-11 tpl11-only"></div>
-                    <div class="tpl11-only" style="margin-bottom: 12px;">
-                        <div class="flex-between">
-                            <span>Subtotal</span>
-                            <span class="prevSubtotalValue">0</span>
+                        <div class="tpl11-only section-tpl11-singtrade" style="margin-bottom: 5px;">
+                            <div class="text-center" style="font-weight: bold; font-size: 1.1em; margin-bottom: 6px;">TAX INVOICE</div>
+                            <div class="flex-between">
+                                <span>Inv No: <span class="prevReceiptNoField"></span></span>
+                                <span>Date: <span class="prevDateIndo"></span></span>
+                            </div>
+                            <div class="flex-between" style="margin-bottom: 4px;">
+                                <span>Sales: <span class="cashierNameField"></span></span>
+                                <span>Cust: <span id="prevSingCust"></span></span>
+                            </div>
+                            <div class="divider-11"></div>
                         </div>
-                        <div class="flex-between" style="font-weight: bold;">
-                            <span>Grand Total</span>
-                            <span class="prevTotalField">Rp 0</span>
-                        </div>
-                        <div class="flex-between">
-                            <span id="prevPaymentMethod">QRIS</span>
-                            <span class="prevTotalField">Rp 0</span>
-                        </div>
-                        <div class="flex-between section-tpl11-stationary-bonus" style="font-size: 0.85em; font-style: italic; border-top: 1px dashed #000; margin-top: 4px; padding-top: 4px; display: none;">
-                            <span>Poin Member yang didapat</span>
-                            <span>+15 Poin</span>
-                        </div>
-                    </div>
 
-                    <div id="prevFooter" class="text-center" style="font-size: 0.95em; margin-top: 8px; white-space: pre-line;"></div>
-                    
-                    <div class="tpl11-only section-tpl11-restaurant" style="margin-top: 12px; font-style: italic;">
-                        Dilayani Oleh : <span class="cashierNameField">Lika</span>
-                    </div>
-                </div>
-
-                <div class="tpl12-only section-tpl12-hotel">
-                    <div class="text-center" style="white-space: pre-line; line-height: 1.1; margin-bottom: 10px;">
-BETEL BOX
-HOSTEL & TOURS
-www.betelbox.com
-www.betelbox.tours.com
-
-200 JOO CHIAT RD S427471
-
-** DUPLICATE RECEIPT **
-                    </div>
-                    
-                    <div style="margin-bottom: 8px;">
-                        <div class="flex-between">
-                            <span>REG &nbsp;&nbsp;<span id="prevDate12"></span></span>
-                        </div>
-                        <div class="flex-between">
-                            <span id="prevCNum12">C01</span>
-                            <span id="prevRand5_12">000004</span>
-                        </div>
-                    </div>
-                    
-                    <div id="prevItems12"></div>
-                    
-                    <div style="margin-top: 15px;">
-                        <div class="text-center" style="margin-bottom: 5px;"><span id="prevQtyNo12">1 NO</span></div>
-                        <div class="flex-between" style="font-size: 1.25em; font-weight: bold; margin-bottom: 2px;">
+                        <div id="prevItems"></div>
+                        
+                        <div class="divider not-tpl11"></div>
+                        <div class="flex-between total-line not-tpl11">
                             <span>TOTAL</span>
-                            <span id="prevTotal12_large">$34.20</span>
+                            <span class="prevTotalField">Rp 0</span>
                         </div>
-                        <div class="flex-between">
-                            <span>CASH</span>
-                            <span id="prevTotal12_small">$34.20</span>
+                        <div class="divider not-tpl11" style="margin-top:10px;"></div>
+                        
+                        <div class="divider-11 tpl11-only"></div>
+                        <div class="tpl11-only" style="margin-bottom: 12px;">
+                            <div class="flex-between">
+                                <span>Subtotal</span>
+                                <span class="prevSubtotalValue">0</span>
+                            </div>
+                            <div class="flex-between" style="font-weight: bold;">
+                                <span>Grand Total</span>
+                                <span class="prevTotalField">Rp 0</span>
+                            </div>
+                            <div class="flex-between">
+                                <span id="prevPaymentMethod">QRIS</span>
+                                <span class="prevTotalField">Rp 0</span>
+                            </div>
+                            <div class="flex-between section-tpl11-stationary-bonus" style="font-size: 0.85em; font-style: italic; border-top: 1px dashed #000; margin-top: 4px; padding-top: 4px; display: none;">
+                                <span>Poin Member yang didapat</span>
+                                <span>+15 Poin</span>
+                            </div>
                         </div>
-                        <div class="text-center" style="margin-top: 8px; font-size: 0.9em;">
-                            * INVOICE No . * <span id="prevInv12">014446</span>
+
+                        <div id="prevFooter" class="text-center" style="font-size: 0.95em; margin-top: 8px; white-space: pre-line;"></div>
+                        
+                        <div class="tpl11-only section-tpl11-restaurant" style="margin-top: 12px; font-style: italic;">
+                            Dilayani Oleh : <span class="cashierNameField">Lika</span>
                         </div>
-                    </div>
-                    
-                    <div style="margin-top: 20px; text-align: left; line-height: 1.5; font-size: 0.95em;">
-                        <div>BUNK # : </div>
-                        <div>NAME   : <span id="prevHotelName12"></span></div>
-                        <div>DATE IN : <span id="prevDateIn12"></span></div>
-                        <div>FINAL NIGHT : <span id="prevDateOut12"></span></div>
                     </div>
 
+                    <div class="tpl12-only section-tpl12-hotel">
+                        <div class="text-center" style="white-space: pre-line; line-height: 1.1; margin-bottom: 10px;">
+    BETEL BOX
+    HOSTEL & TOURS
+    www.betelbox.com
+    www.betelbox.tours.com
+
+    200 JOO CHIAT RD S427471
+
+    ** DUPLICATE RECEIPT **
+                        </div>
+                        
+                        <div style="margin-bottom: 8px;">
+                            <div class="flex-between">
+                                <span>REG &nbsp;&nbsp;<span id="prevDate12"></span></span>
+                            </div>
+                            <div class="flex-between">
+                                <span id="prevCNum12">C01</span>
+                                <span id="prevRand5_12">000004</span>
+                            </div>
+                        </div>
+                        
+                        <div id="prevItems12"></div>
+                        
+                        <div style="margin-top: 15px;">
+                            <div class="text-center" style="margin-bottom: 5px;"><span id="prevQtyNo12">1 NO</span></div>
+                            <div class="flex-between" style="font-size: 1.25em; font-weight: bold; margin-bottom: 2px;">
+                                <span>TOTAL</span>
+                                <span id="prevTotal12_large">$34.20</span>
+                            </div>
+                            <div class="flex-between">
+                                <span>CASH</span>
+                                <span id="prevTotal12_small">$34.20</span>
+                            </div>
+                            <div class="text-center" style="margin-top: 8px; font-size: 0.9em;">
+                                * INVOICE No . * <span id="prevInv12">014446</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; text-align: left; line-height: 1.5; font-size: 0.95em;">
+                            <div>BUNK # : </div>
+                            <div>NAME   : <span id="prevHotelName12"></span></div>
+                            <div>DATE IN : <span id="prevDateIn12"></span></div>
+                            <div>FINAL NIGHT : <span id="prevDateOut12"></span></div>
+                        </div>
+
+                    </div>
                 </div>
-
             </div>
             
         </div>
     </div>
 
     <script>
-        let currentTab = 'singtrade';
-        let currencySymbol = '$ ';
+        lucide.createIcons();
+        
+        let currentTab = 'restaurant';
+        let currencySymbol = 'Rp ';
         
         const sectorData = {
             restaurant: {
@@ -550,6 +744,33 @@ www.betelbox.tours.com
                     "tpl-9": "NOTA ATK DOTTED SYSTEM\nCustomer Copy",
                     "tpl-10": "Maturnuwun.\nBelanja Cerdas Hemat Kertas.",
                     "tpl-11": "Terima Kasih Telah Menjadi Member Setia!\nPoin Anda Otomatis Ditambahkan Di Database.",
+                    "tpl-12": ""
+                }
+            },
+            sembako: {
+                name: "TOKO GROSIR BERKAH",
+                address: "Pasar Induk Jodoh Blok A No. 12\nBatam - Telp/WA: 0812-3456-7890",
+                prefix: "#GRS",
+                cashiers: ['Mas Joko', 'Mbak Nur', 'Ucok'],
+                payments: ['Cash Keras', 'Transfer Bank', 'Tempo 1 Minggu', 'QRIS'],
+                defaultItems: [
+                    { qty: 2, name: 'Beras Bulog 5Kg', price: 55000 },
+                    { qty: 10, name: 'Indomie Goreng Karton', price: 105000 },
+                    { qty: 5, name: 'Minyak Goreng Bimoli 1L', price: 18000 },
+                    { qty: 3, name: 'Telur Ayam Papan', price: 48000 }
+                ],
+                footers: {
+                    "tpl-1": "Terima Kasih Telah Berbelanja!\nSemoga Dagangan Anda Laris Manis.",
+                    "tpl-2": "TOKO GROSIR BERKAH\nBarang cacat retur maksimal 1x24 Jam.",
+                    "tpl-3": "Terima Kasih!\nMelayani Grosir & Eceran Harga Pabrik.",
+                    "tpl-4": "NOTA PEMBELIAN SEMBAKO\nSudah Lunas / Barang Telah Dicek.",
+                    "tpl-5": "Mitra Warung & Kelontong Terpercaya.\nTerima Kasih.",
+                    "tpl-6": "BARANG YANG SUDAH DIBELI\nTIDAK DAPAT DIKEMBALIKAN!",
+                    "tpl-7": "Semoga Berkah!\nKami Tunggu Orderan Selanjutnya.",
+                    "tpl-8": "Simpan Nota Ini\nSebagai Bukti Pembelian & Retur Barang.",
+                    "tpl-9": "NOTA DISTRIBUSI TOKO\nCopy Pelanggan",
+                    "tpl-10": "Matur Suwun.\nRezeki Lancar Barokah.",
+                    "tpl-11": "Harga Khusus Pelanggan Grosir / Reseller.\nTerima Kasih Atas Kerja Samanya!",
                     "tpl-12": ""
                 }
             },
@@ -606,7 +827,6 @@ www.betelbox.tours.com
             }
         };
 
-        // Variable Acak Global
         let currentCashier = '';
         let currentPayMethod = '';
         let currentReceiptNo = '';
@@ -646,7 +866,15 @@ www.betelbox.tours.com
 
             generateRandomSectorVariables(target);
 
-            const currentTpl = document.getElementById('templateSelect').value;
+            const selectEl = document.getElementById('templateSelect');
+            if (target === 'sembako' && selectEl.value === 'tpl-12') {
+                selectEl.value = 'tpl-1'; 
+            }
+            if (target !== 'singtrade' && selectEl.value === 'tpl-12') {
+                selectEl.value = 'tpl-1';
+            }
+
+            const currentTpl = selectEl.value;
             document.getElementById('footerMessage').value = sectorData[target].footers[currentTpl] || "";
 
             const container = document.getElementById('itemsContainer');
@@ -656,17 +884,23 @@ www.betelbox.tours.com
                 row.className = 'item-row';
                 row.innerHTML = `
                     <input type="number" class="qty" placeholder="Qty" value="${item.qty}" min="1" oninput="updatePreview()">
-                    <input type="text" class="name" placeholder="Nama Barang" value="${item.name}" oninput="updatePreview()">
-                    <input type="number" step="0.01" class="price" placeholder="Harga" value="${item.price}" oninput="updatePreview()">
+                    <input type="text" class="name" placeholder="Item Name" value="${item.name}" oninput="updatePreview()">
+                    <input type="number" step="0.01" class="price" placeholder="Price" value="${item.price}" oninput="updatePreview()">
                     <input type="text" class="item-total" placeholder="Total" readonly>
-                    <button class="btn btn-danger" onclick="removeItem(this)">X</button>
+                    <button class="btn btn-danger" onclick="removeItem(this)"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i></button>
                 `;
                 container.appendChild(row);
             });
+            
+            lucide.createIcons(); 
 
             const apotekBlock = document.querySelector('.apotek-meta-block');
             if (target === 'apotek') apotekBlock.style.display = 'block';
             else apotekBlock.style.display = 'none';
+
+            const sembakoBlock = document.querySelector('.sembako-meta-block');
+            if (target === 'sembako') sembakoBlock.style.display = 'block';
+            else sembakoBlock.style.display = 'none';
 
             updatePreview();
         }
@@ -713,12 +947,13 @@ www.betelbox.tours.com
             row.className = 'item-row';
             row.innerHTML = `
                 <input type="number" class="qty" placeholder="Qty" value="1" min="1" oninput="updatePreview()">
-                <input type="text" class="name" placeholder="Nama Barang" oninput="updatePreview()">
-                <input type="number" step="0.01" class="price" placeholder="Harga" oninput="updatePreview()">
+                <input type="text" class="name" placeholder="Item Name" oninput="updatePreview()">
+                <input type="number" step="0.01" class="price" placeholder="Price" oninput="updatePreview()">
                 <input type="text" class="item-total" placeholder="Total" readonly>
-                <button class="btn btn-danger" onclick="removeItem(this)">X</button>
+                <button class="btn btn-danger" onclick="removeItem(this)"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i></button>
             `;
             container.appendChild(row);
+            lucide.createIcons();
             updatePreview();
         }
 
@@ -743,7 +978,6 @@ www.betelbox.tours.com
             }
         });
 
-        // FUNGSI INTI RENDER PREVIEW REAL-TIME
         function updatePreview() {
             const template = document.getElementById('templateSelect').value;
             const receipt = document.getElementById('receipt');
@@ -760,17 +994,16 @@ www.betelbox.tours.com
             document.getElementById('valFontSize').innerText = fSize + " px";
             document.getElementById('valPadding').innerText = padTepi + " mm";
 
-            // PERBAIKAN: Menambahkan kontrol spasi margin tepi (padding) secara inline
             receipt.style.marginLeft = mLeft + "mm";
             receipt.style.width = wTarget + "mm";
             receipt.style.maxWidth = wTarget + "mm";
             receipt.style.fontSize = fSize + "px";
-            receipt.style.padding = `0 ${padTepi}mm 4mm ${padTepi}mm`; // Top 0, Kanan dinamis, Bawah 4mm, Kiri dinamis
+            receipt.style.padding = `0 ${padTepi}mm 4mm ${padTepi}mm`;
 
             let currentTitle = '';
             let currentAddress = '';
 
-            document.querySelectorAll('.section-tpl11-restaurant, .section-tpl11-stationary, .section-tpl11-apotek, .section-tpl11-singtrade').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.section-tpl11-restaurant, .section-tpl11-stationary, .section-tpl11-apotek, .section-tpl11-singtrade, .section-tpl11-sembako').forEach(el => el.style.display = 'none');
             document.querySelector('.section-tpl11-stationary-bonus').style.display = 'none';
 
             if (currentTab === 'restaurant') {
@@ -785,6 +1018,17 @@ www.betelbox.tours.com
                 if(template === 'tpl-11') {
                     document.querySelectorAll('.section-tpl11-stationary').forEach(el => el.style.display = 'block');
                     document.querySelector('.section-tpl11-stationary-bonus').style.display = 'flex';
+                }
+            } else if (currentTab === 'sembako') {
+                currentTitle = document.getElementById('sembakoName').value;
+                currentAddress = document.getElementById('sembakoAddress').value;
+                
+                const cust = document.getElementById('sembakoCustomer').value;
+                document.getElementById('prevSembakoCust').innerText = cust;
+                document.getElementById('prevSembakoCust11').innerText = cust;
+
+                if(template === 'tpl-11') {
+                    document.querySelectorAll('.section-tpl11-sembako').forEach(el => el.style.display = 'block');
                 }
             } else if (currentTab === 'apotek') {
                 currentTitle = document.getElementById('apotekName').value;
@@ -807,7 +1051,6 @@ www.betelbox.tours.com
                 
                 document.getElementById('prevSingCust').innerText = document.getElementById('singCustomer').value || 'Cash Customer';
                 
-                // Binding khusus untuk TPL-12 (Betel Box Hotel)
                 document.getElementById('prevHotelName12').innerText = document.getElementById('singCustomer').value;
                 document.getElementById('prevDateIn12').innerText = document.getElementById('hotelDateIn').value;
                 document.getElementById('prevDateOut12').innerText = document.getElementById('hotelDateOut').value;
@@ -826,7 +1069,6 @@ www.betelbox.tours.com
             document.getElementById('prevReceiptNoGen').innerText = currentReceiptNo;
             document.getElementById('prevPaymentMethod').innerText = currentPayMethod;
             
-            // Random TPL 12 Bindings
             document.getElementById('prevCNum12').innerText = currentCNum12;
             document.getElementById('prevRand5_12').innerText = currentRand5_12;
             document.getElementById('prevInv12').innerText = currentInv12;
@@ -847,7 +1089,7 @@ www.betelbox.tours.com
 
             const itemRows = document.querySelectorAll('.item-row');
             let itemsHTML = '';
-            let itemsHTML12 = ''; // Khusus Desain 12
+            let itemsHTML12 = ''; 
             let total = 0;
             let totalQty12 = 0;
 
@@ -867,7 +1109,6 @@ www.betelbox.tours.com
                     totalQty12 += qty;
                     
                     if(template === 'tpl-12') {
-                        // Layout Spesifik Betel Box
                         itemsHTML12 += `
                             <div style="margin-bottom: 8px;">
                                 <div>${name}</div>
@@ -904,28 +1145,30 @@ www.betelbox.tours.com
             document.getElementById('prevItems').innerHTML = itemsHTML;
             document.getElementById('prevItems12').innerHTML = itemsHTML12;
             
-            // Total UI
             document.getElementById('uiGrandTotal').innerText = currencySymbol + formatCurrency(total);
 
-            // Total TPL 1-11
             document.querySelectorAll('.prevTotalField').forEach(el => el.innerText = currencySymbol + formatCurrency(total));
             document.querySelector('.prevSubtotalValue').innerText = formatCurrency(total);
             
-            // Total TPL 12
             document.getElementById('prevQtyNo12').innerText = totalQty12 + " NO";
             document.getElementById('prevTotal12_large').innerText = "$" + formatCurrency(total);
             document.getElementById('prevTotal12_small').innerText = "$" + formatCurrency(total);
         }
 
         window.onload = function() {
-            generateRandomSectorVariables('singtrade');
-            document.querySelector('.tab-singtrade').click();
+            generateRandomSectorVariables('restaurant');
+            document.querySelector('.tab-btn').click(); 
             
-            // Set Tanggal Awal
             const now = new Date();
             const tzOffset = now.getTimezoneOffset() * 60000;
             const localISOTime = (new Date(now - tzOffset)).toISOString().slice(0, 16);
             document.getElementById('transactionDate').value = localISOTime;
+            
+            document.getElementById('inputMarginLeft').value = 0;
+            document.getElementById('inputWidth').value = 48;
+            document.getElementById('inputPadding').value = 0;
+            document.getElementById('inputFontSize').value = 11;
+            updatePreview();
         };
     </script>
 </body>
