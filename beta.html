@@ -188,22 +188,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative;
         }
 
-        /* WATERMARK KEAMANAN - MUTLAK ADA */
-        #receipt::before {
-            content: 'SIMULATION ONLY';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 2em;
-            font-weight: 900;
-            color: rgba(0, 0, 0, 0.08);
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: 0;
-            font-family: Arial, sans-serif;
-            letter-spacing: 5px;
-        }
+        /* Dihapus: WATERMARK KEAMANAN - MUTLAK ADA */
         
         .receipt-content { position: relative; z-index: 1; }
 
@@ -300,11 +285,7 @@
             #print-panel { margin: 0 !important; padding: 0 !important; width: 58mm !important; box-shadow: none !important; background: transparent !important; display: block !important; border: none !important;}
             .preview-wrapper { display: block !important; padding: 0 !important; margin: 0 !important; background: transparent !important; box-shadow: none !important; border: none !important;}
             #receipt { box-shadow: none !important; display: block !important; }
-            #receipt::before {
-                color: rgba(0, 0, 0, 0.15) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+            /* Dihapus: Memastikan watermark tetap tercetak */
         }
     </style>
 </head>
@@ -320,7 +301,7 @@
 
         <div class="disclaimer-alert">
             <strong><i data-lucide="shield-alert" style="width: 14px; height: 14px; display: inline-block; margin-bottom: -2px;"></i> Portfolio Disclaimer:</strong><br>
-            Modul ini dibangun murni untuk mendemonstrasikan manipulasi <em>CSS Print Media</em>, integrasi grid dinamis, dan rendering antarmuka Point of Sales (POS). Output dokumen dilindungi <em>watermark</em> dan tidak valid untuk transaksi nyata.
+            Modul ini dibangun murni untuk mendemonstrasikan manipulasi <em>CSS Print Media</em>, integrasi grid dinamis, dan rendering antarmuka Point of Sales (POS). Output dokumen tidak valid untuk transaksi nyata.
         </div>
         
         <div class="tabs">
