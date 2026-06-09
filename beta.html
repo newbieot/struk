@@ -156,6 +156,17 @@
         .btn-primary:hover { background-color: var(--pos-orange); border-color: var(--pos-orange); color: white; }
         .btn-danger { background-color: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 10px; border: 1px solid rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background-color: var(--danger-red); color: white; }
+        
+        /* Small Action Buttons (Refresh) */
+        .btn-action { 
+            background: rgba(59, 130, 246, 0.15); color: #93c5fd; 
+            padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; 
+            border: 1px solid rgba(59, 130, 246, 0.3); 
+            display: inline-flex; align-items: center; gap: 5px;
+            cursor: pointer; transition: 0.2s;
+        }
+        .btn-action:hover { background: #3b82f6; color: white; }
+
         .btn-print { 
             background: linear-gradient(135deg, var(--pos-orange), #d84315); 
             color: white; width: 100%; font-size: 1.1rem; margin-top: 20px; padding: 15px; 
@@ -188,8 +199,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative;
         }
 
-        /* Dihapus: WATERMARK KEAMANAN - MUTLAK ADA */
-        
         .receipt-content { position: relative; z-index: 1; }
 
         .logo-container { text-align: center; margin-bottom: 5px; }
@@ -285,7 +294,6 @@
             #print-panel { margin: 0 !important; padding: 0 !important; width: 58mm !important; box-shadow: none !important; background: transparent !important; display: block !important; border: none !important;}
             .preview-wrapper { display: block !important; padding: 0 !important; margin: 0 !important; background: transparent !important; box-shadow: none !important; border: none !important;}
             #receipt { box-shadow: none !important; display: block !important; }
-            /* Dihapus: Memastikan watermark tetap tercetak */
         }
     </style>
 </head>
@@ -309,7 +317,6 @@
             <button class="tab-btn" onclick="switchTab('stationary')">Retail / Stat.</button>
             <button class="tab-btn" onclick="switchTab('apotek')">Pharmacy</button>
             <button class="tab-btn" onclick="switchTab('singtrade')">Hotel / Trade</button>
-            <!-- TAB BARU UNTUK SEMBAKO -->
             <button class="tab-btn" onclick="switchTab('sembako')">Grosir / Sembako</button>
         </div>
         
@@ -382,7 +389,6 @@
             </div>
         </div>
 
-        <!-- FORM BARU UNTUK SEMBAKO -->
         <div id="fields-sembako" class="category-fields">
             <div class="form-group">
                 <label>Nama Toko Grosir/Sembako</label>
@@ -449,9 +455,21 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label><i data-lucide="calendar-clock" style="width: 16px; height: 16px;"></i> Transaction Timestamp</label>
-            <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
+        <!-- TRANSACTION & QUICK ACTIONS -->
+        <div class="form-group" style="display: flex; gap: 10px; align-items: flex-end;">
+            <div style="flex: 1;">
+                <label><i data-lucide="calendar-clock" style="width: 16px; height: 16px;"></i> Transaction Timestamp</label>
+                <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
+            </div>
+            <!-- TOMBOL REFRESH BARU -->
+            <div style="display: flex; gap: 5px; flex-direction: column;">
+                <button class="btn-action" onclick="refreshReceiptNo()" title="Acak No. Struk Baru">
+                    <i data-lucide="refresh-cw" style="width: 12px; height: 12px;"></i> No. Struk
+                </button>
+                <button class="btn-action" onclick="refreshCashier()" title="Ganti Nama Kasir Acak">
+                    <i data-lucide="user-switch" style="width: 12px; height: 12px;"></i> Kasir
+                </button>
+            </div>
         </div>
 
         <div class="form-group">
@@ -822,10 +840,7 @@
             currentCashier = pool.cashiers[Math.floor(Math.random() * pool.cashiers.length)];
             currentPayMethod = pool.payments[Math.floor(Math.random() * pool.payments.length)];
             
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let res = pool.prefix;
-            for(let i=0; i<10; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
-            currentReceiptNo = res;
+            generateNewReceiptNo(pool.prefix);
 
             currentResepId = "R-" + Math.floor(10000 + Math.random() * 90000);
             
@@ -833,6 +848,31 @@
             currentRand5_12 = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
             currentInv12 = '01' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
         }
+
+        // FUNGSI BARU UNTUK REFRESH RECEIPT NO
+        function generateNewReceiptNo(prefix) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let res = prefix;
+            for(let i=0; i<10; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+            currentReceiptNo = res;
+        }
+
+        // ACTION BUTTONS HANDLER
+        function refreshReceiptNo() {
+            generateNewReceiptNo(sectorData[currentTab].prefix);
+            updatePreview();
+        }
+
+        function refreshCashier() {
+            const pool = sectorData[currentTab];
+            let newCashier;
+            do {
+                newCashier = pool.cashiers[Math.floor(Math.random() * pool.cashiers.length)];
+            } while (newCashier === currentCashier && pool.cashiers.length > 1); // Ensure it changes if possible
+            currentCashier = newCashier;
+            updatePreview();
+        }
+
 
         function switchTab(target) {
             currentTab = target;
