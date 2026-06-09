@@ -324,23 +324,39 @@
             <button class="tab-btn" onclick="switchTab('sembako')">Grosir / Sembako</button>
         </div>
         
-        <div class="form-group">
-            <label><i data-lucide="layout-template" style="width: 16px; height: 16px;"></i> Layout Template Render</label>
-            <select id="templateSelect" onchange="handleTemplateChange()">
-                <option value="tpl-1">1. Klasik (Dashed, Center)</option>
-                <option value="tpl-2">2. Modern (Solid, Sans-serif)</option>
-                <option value="tpl-3">3. Minimalis (Clean, No Lines)</option>
-                <option value="tpl-4">4. Retro Register (Monospace)</option>
-                <option value="tpl-5">5. Elegan (Serif, Double Line)</option>
-                <option value="tpl-6">6. Bold (Tebal, Impact)</option>
-                <option value="tpl-7">7. Rata Kiri (Left Align Header)</option>
-                <option value="tpl-8">8. Rata Kanan (Right Align Header)</option>
-                <option value="tpl-9">9. Tiket Perjamuan / Nota Dotted</option>
-                <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
-                <option value="tpl-11">11. Ciri Khas Sektor Bisnis (Spesial)</option>
-                <option value="tpl-12">12. Betel Box Hostel (Spesial SingTrade/Hotel)</option>
-                <option value="tpl-13">13. Swalayan (Spesial Sembako/Top100)</option>
-            </select>
+        <div class="form-group" style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <label><i data-lucide="layout-template" style="width: 16px; height: 16px;"></i> Layout Template Render</label>
+                <select id="templateSelect" onchange="handleTemplateChange()">
+                    <option value="tpl-1">1. Klasik (Dashed, Center)</option>
+                    <option value="tpl-2">2. Modern (Solid, Sans-serif)</option>
+                    <option value="tpl-3">3. Minimalis (Clean, No Lines)</option>
+                    <option value="tpl-4">4. Retro Register (Monospace)</option>
+                    <option value="tpl-5">5. Elegan (Serif, Double Line)</option>
+                    <option value="tpl-6">6. Bold (Tebal, Impact)</option>
+                    <option value="tpl-7">7. Rata Kiri (Left Align Header)</option>
+                    <option value="tpl-8">8. Rata Kanan (Right Align Header)</option>
+                    <option value="tpl-9">9. Tiket Perjamuan / Nota Dotted</option>
+                    <option value="tpl-10">10. Kompak (Hemat Kertas)</option>
+                    <option value="tpl-11">11. Ciri Khas Sektor Bisnis (Spesial)</option>
+                    <option value="tpl-12">12. Betel Box Hostel (Spesial SingTrade/Hotel)</option>
+                    <option value="tpl-13">13. Swalayan (Spesial Sembako/Top100)</option>
+                </select>
+            </div>
+            
+            <div style="flex: 1; min-width: 200px;">
+                <label><i data-lucide="type" style="width: 16px; height: 16px;"></i> Override Jenis Font</label>
+                <select id="fontSelect" onchange="updatePreview()">
+                    <option value="">-- Font Bawaan Template --</option>
+                    <option value="Arial, sans-serif">Arial (Sans-Serif)</option>
+                    <option value="'Helvetica Neue', Helvetica, sans-serif">Helvetica (Sans-Serif)</option>
+                    <option value="'Inter', sans-serif">Inter (Sans-Serif)</option>
+                    <option value="'Courier Prime', Courier, monospace">Courier Prime (Monospace)</option>
+                    <option value="'Lucida Console', Monaco, monospace">Lucida Console (Monospace)</option>
+                    <option value="'Times New Roman', Times, serif">Times New Roman (Serif)</option>
+                    <option value="'Arial Black', Impact, sans-serif">Arial Black (Tebal)</option>
+                </select>
+            </div>
         </div>
 
         <div class="form-group calibration-box">
@@ -488,7 +504,10 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-top: 25px; margin-bottom: 15px;">
             <h2 style="margin:0; font-size: 1rem; border:none; padding:0; color: white;"><i data-lucide="shopping-cart" style="width: 18px; height: 18px; display:inline-block; margin-bottom:-3px;"></i> CART ITEMS</h2>
-            <button class="btn btn-primary" onclick="addItem()" style="font-size: 11px; padding: 6px 12px;"><i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add Row</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-action" onclick="shuffleCart()" style="font-size: 11px; padding: 6px 12px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);"><i data-lucide="shuffle" style="width: 14px; height: 14px;"></i> Acak Urutan</button>
+                <button class="btn btn-primary" onclick="addItem()" style="font-size: 11px; padding: 6px 12px;"><i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add Row</button>
+            </div>
         </div>
         
         <div id="itemsContainer"></div>
@@ -984,12 +1003,27 @@
 
             const container = document.getElementById('itemsContainer');
             container.innerHTML = '';
-            sectorData[target].defaultItems.forEach(item => {
+            
+            // FUNGSI RESTORE CART DARI LOCAL STORAGE
+            let itemsToLoad = sectorData[target].defaultItems;
+            const savedCart = localStorage.getItem(`posnew_cart_${target}`);
+            if (savedCart) {
+                try {
+                    const parsedCart = JSON.parse(savedCart);
+                    if (Array.isArray(parsedCart) && parsedCart.length > 0) {
+                        itemsToLoad = parsedCart;
+                    }
+                } catch(e) { }
+            }
+
+            itemsToLoad.forEach(item => {
                 const row = document.createElement('div');
                 row.className = 'item-row';
+                // Hindari kutip ganda memecahkan HTML jika ada item name hasil entri user
+                const safeName = (item.name || '').replace(/"/g, '&quot;');
                 row.innerHTML = `
                     <input type="number" class="qty" placeholder="Qty" value="${item.qty}" min="1" oninput="updatePreview()">
-                    <input type="text" class="name" placeholder="Item Name" value="${item.name}" oninput="updatePreview()">
+                    <input type="text" class="name" placeholder="Item Name" value="${safeName}" oninput="updatePreview()">
                     <input type="number" step="0.01" class="price" placeholder="Price" value="${item.price}" oninput="updatePreview()">
                     <input type="text" class="item-total" placeholder="Total" readonly>
                     <button class="btn btn-danger" onclick="removeItem(this)"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i></button>
@@ -1067,6 +1101,33 @@
             updatePreview();
         }
 
+        // FUNGSI ACAK URUTAN (SHUFFLE CART ITEMS)
+        function shuffleCart() {
+            const container = document.getElementById('itemsContainer');
+            const rows = Array.from(container.children);
+            for (let i = rows.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [rows[i], rows[j]] = [rows[j], rows[i]];
+            }
+            container.innerHTML = '';
+            rows.forEach(row => container.appendChild(row));
+            updatePreview();
+        }
+
+        // FUNGSI AUTO-SAVE CART KE LOCAL STORAGE
+        function saveCartToStorage() {
+            const itemRows = document.querySelectorAll('.item-row');
+            const cartData = [];
+            itemRows.forEach(row => {
+                cartData.push({
+                    qty: row.querySelector('.qty').value,
+                    name: row.querySelector('.name').value,
+                    price: row.querySelector('.price').value
+                });
+            });
+            localStorage.setItem(`posnew_cart_${currentTab}`, JSON.stringify(cartData));
+        }
+
         document.getElementById('logoInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             const logoImg = document.getElementById('prevLogo');
@@ -1085,9 +1146,17 @@
 
         function updatePreview() {
             const template = document.getElementById('templateSelect').value;
+            const fontOverride = document.getElementById('fontSelect').value;
             const receipt = document.getElementById('receipt');
             
             receipt.className = template;
+
+            // OVERRIDE JENIS FONT
+            if(fontOverride !== '') {
+                receipt.style.fontFamily = fontOverride;
+            } else {
+                receipt.style.fontFamily = ''; // Kembali ke font bawaan template
+            }
 
             const mLeft = document.getElementById('inputMarginLeft').value;
             const wTarget = document.getElementById('inputWidth').value;
@@ -1305,6 +1374,9 @@
             document.getElementById('prevCashier13').innerText = currentCashier.toUpperCase().substring(0, 8);
             document.getElementById('prevMachine13').innerText = Math.floor(1000 + Math.random() * 9000);
             document.getElementById('prevReg13').innerText = Math.floor(10 + Math.random() * 90).toString().padStart(4, '0');
+
+            // SIMPAN PERUBAHAN KE LOCAL STORAGE SAAT PREVIEW UPDATE
+            saveCartToStorage();
         }
 
         window.onload = function() {
