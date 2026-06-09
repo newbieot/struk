@@ -455,19 +455,23 @@
             </div>
         </div>
 
-        <!-- TRANSACTION & QUICK ACTIONS -->
-        <div class="form-group" style="display: flex; gap: 10px; align-items: flex-end;">
-            <div style="flex: 1;">
+        <div class="form-group" style="display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 180px;">
                 <label><i data-lucide="calendar-clock" style="width: 16px; height: 16px;"></i> Transaction Timestamp</label>
                 <input type="datetime-local" id="transactionDate" oninput="updatePreview()">
             </div>
-            <!-- TOMBOL REFRESH BARU -->
-            <div style="display: flex; gap: 5px; flex-direction: column;">
-                <button class="btn-action" onclick="refreshReceiptNo()" title="Acak No. Struk Baru">
-                    <i data-lucide="refresh-cw" style="width: 12px; height: 12px;"></i> No. Struk
-                </button>
-                <button class="btn-action" onclick="refreshCashier()" title="Ganti Nama Kasir Acak">
-                    <i data-lucide="user-switch" style="width: 12px; height: 12px;"></i> Kasir
+            <div style="flex: 1; min-width: 180px;">
+                <label><i data-lucide="hash" style="width: 16px; height: 16px;"></i> No. Struk</label>
+                <div style="display: flex; gap: 5px; height: 41px;">
+                    <input type="text" id="customReceiptNo" oninput="manualReceiptNo()" style="margin: 0; height: 100%;" placeholder="Ketik manual...">
+                    <button class="btn-action" onclick="refreshReceiptNo()" title="Acak No. Struk Baru" style="height: 100%; padding: 0 12px; border-radius: 8px;">
+                        <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
+            </div>
+            <div style="display: flex; height: 41px;">
+                <button class="btn-action" onclick="refreshCashier()" title="Ganti Nama Kasir Acak" style="height: 100%; padding: 0 12px; border-radius: 8px;">
+                    <i data-lucide="user-switch" style="width: 16px; height: 16px;"></i> Kasir
                 </button>
             </div>
         </div>
@@ -492,7 +496,6 @@
         <button class="btn btn-print" onclick="window.print()"><i data-lucide="printer" style="width: 20px; height: 20px;"></i> RENDER PRINT MEDIA</button>
     </div>
 
-    <!-- PREVIEW PANEL -->
     <div class="panel" id="print-panel">
         <div class="header-brand no-print" style="justify-content: center;">
             <h2 style="font-size: 1.1rem; color: var(--text-dim); background: none; -webkit-text-fill-color: initial;"><i data-lucide="monitor-smartphone" style="width: 18px; height: 18px; display:inline-block; margin-bottom:-4px; color: var(--text-dim);"></i> VIRTUAL PAPER PREVIEW</h2>
@@ -518,7 +521,6 @@
                                 <span>Kasir: <span class="cashierNameField">Admin</span></span>
                             </div>
                             <div id="prevDate">29/05/2026 13:37</div>
-                            <!-- Khusus Sembako Non Tpl-11 -->
                             <div class="sembako-meta-block" style="margin-top: 2px; display:none;">
                                 Cust: <span id="prevSembakoCust">Warung Bu Tejo</span>
                             </div>
@@ -840,7 +842,8 @@
             currentCashier = pool.cashiers[Math.floor(Math.random() * pool.cashiers.length)];
             currentPayMethod = pool.payments[Math.floor(Math.random() * pool.payments.length)];
             
-            generateNewReceiptNo(pool.prefix);
+            // Generate nomor struk baru secara full acak
+            generateNewReceiptNo();
 
             currentResepId = "R-" + Math.floor(10000 + Math.random() * 90000);
             
@@ -849,17 +852,47 @@
             currentInv12 = '01' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
         }
 
-        // FUNGSI BARU UNTUK REFRESH RECEIPT NO
-        function generateNewReceiptNo(prefix) {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let res = prefix;
-            for(let i=0; i<10; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
-            currentReceiptNo = res;
+        // FUNGSI BARU UNTUK REFRESH RECEIPT NO (FULL ACAK DINAMIS)
+        function generateNewReceiptNo() {
+            const useHash = Math.random() > 0.5 ? '#' : '';
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            
+            // Prefix huruf acak (1-3 karakter)
+            const prefixLength = Math.floor(Math.random() * 3) + 1;
+            let randomPrefix = '';
+            for(let i=0; i<prefixLength; i++) {
+                randomPrefix += letters.charAt(Math.floor(Math.random() * letters.length));
+            }
+            
+            // Sisa karakter acak (panjang 6-12 karakter agar dinamis)
+            const bodyLength = Math.floor(Math.random() * 7) + 6;
+            let randomBody = '';
+            for(let i=0; i<bodyLength; i++) {
+                randomBody += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
+            }
+            
+            currentReceiptNo = useHash + randomPrefix + randomBody;
+            
+            // Update UI kolom input manual
+            const customInput = document.getElementById('customReceiptNo');
+            if (customInput) customInput.value = currentReceiptNo;
+        }
+
+        // HANDLER INPUT MANUAL
+        function manualReceiptNo() {
+            const manualVal = document.getElementById('customReceiptNo').value;
+            if (manualVal.trim() !== '') {
+                currentReceiptNo = manualVal;
+            } else {
+                generateNewReceiptNo();
+            }
+            updatePreview();
         }
 
         // ACTION BUTTONS HANDLER
         function refreshReceiptNo() {
-            generateNewReceiptNo(sectorData[currentTab].prefix);
+            generateNewReceiptNo();
             updatePreview();
         }
 
@@ -868,11 +901,10 @@
             let newCashier;
             do {
                 newCashier = pool.cashiers[Math.floor(Math.random() * pool.cashiers.length)];
-            } while (newCashier === currentCashier && pool.cashiers.length > 1); // Ensure it changes if possible
+            } while (newCashier === currentCashier && pool.cashiers.length > 1); 
             currentCashier = newCashier;
             updatePreview();
         }
-
 
         function switchTab(target) {
             currentTab = target;
