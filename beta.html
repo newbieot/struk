@@ -930,6 +930,34 @@
         }
 
         function generateNewReceiptNo() {
+            function generateNewReceiptNo() {
+    const useHash = Math.random() > 0.5 ? '#' : '';
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    
+    const prefixLength = Math.floor(Math.random() * 3) + 1;
+    let randomPrefix = '';
+    for(let i=0; i<prefixLength; i++) {
+        randomPrefix += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    
+    const bodyLength = Math.floor(Math.random() * 7) + 6;
+    let randomBody = '';
+    for(let i=0; i<bodyLength; i++) {
+        randomBody += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
+    }
+    
+    currentReceiptNo = useHash + randomPrefix + randomBody;
+    
+    const customInput = document.getElementById('customReceiptNo');
+    if (customInput) customInput.value = currentReceiptNo;
+
+    // --- TAMBAHAN: Acak nomor spesifik untuk template lain ---
+    currentResepId = "R-" + Math.floor(10000 + Math.random() * 90000);
+    currentCNum12 = 'C' + Math.floor(Math.random() * 90 + 10).toString().padStart(2, '0');
+    currentRand5_12 = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+    currentInv12 = '01' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+}
             const useHash = Math.random() > 0.5 ? '#' : '';
             const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             const alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
